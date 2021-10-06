@@ -1,6 +1,6 @@
 ---
 title: "Team contract"
-author: "Team name"
+author: "Liza-Kemunto-Patrick"
 output: github_document
 ---
 
