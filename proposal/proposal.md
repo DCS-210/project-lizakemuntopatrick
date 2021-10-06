@@ -1,6 +1,6 @@
 Project proposal
 ================
-Team name
+Liza-Kemunto-Patrick
 
 ``` r
 library(tidyverse)
