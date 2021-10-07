@@ -11,6 +11,8 @@ library(broom)
 
 ## 1. Introduction
 
+In this project, we will be using Super Bowl ad data from the past 20 years to analyze trends in brand popularity and national responsiveness to themes like patriotism and sexuality present in Super Bowl ads. The data we are using comes from FiveThirtyEight, who published a corresponding article "According to Super Bowl Ads, Americans Love America, Animals and Sex" in February, 2021. The data was collected by watching and evaluating 233 ads from the 10 brands that aired the most in the last 21 Super Bowls (according to superbowl-ads.com) using seven crtieria. 
+
 How does the popularity of different kinds of ads change over time? Are there events that contextualize this?
 
 What is the breakdown for brands across ad types?
