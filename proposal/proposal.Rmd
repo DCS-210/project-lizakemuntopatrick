@@ -1,6 +1,6 @@
 ---
-title: "Project proposal"
-author: "Liza-Kemunto-Patrick"
+title: "Project Proposal"
+author: "Liza, Kemunto, and Patrick"
 output: github_document
 ---
 
@@ -11,26 +11,172 @@ library(broom)
 
 ## 1. Introduction
 
-In this project, we will be using Super Bowl ad data from the past 20 years to analyze trends in brand popularity and national responsiveness to themes like patriotism and sexuality present in Super Bowl ads. The data we are using comes from FiveThirtyEight, who published a corresponding article "According to Super Bowl Ads, Americans Love America, Animals and Sex" in February, 2021. The data was collected by watching and evaluating 233 ads from the 10 brands that aired the most in the last 21 Super Bowls (according to superbowl-ads.com) using seven crtieria. 
+In this project, we will be using Superbowl ad data from the past 20 years to analyze trends in brand popularity and national responsiveness to themes like patriotism and sexuality present in Superbowl ads. The data we are using comes from FiveThirtyEight, who published a corresponding article "According to Superbowl Ads, Americans Love America, Animals and Sex" in February, 2021. The data was collected by watching and evaluating 233 ads from the 10 brands that aired the most in the last 21 Super Bowls (according to Superbowl-ads.com) using seven criteria. 
 
-How does the popularity of different kinds of ads change over time? Are there events that contextualize this?
+These criteria are whether the ad contains humor, shows the product quickly, is patriotic, contains a celebrity, contains danger, contains animals, and/or uses sexuality. The other variables in this data set include the year the ad was made, the brand for the commercial, Youtube view count, Youtube like count, Youtube dislike count, and Youtube comment count. 
 
-What is the breakdown for brands across ad types?
+The specific questions we want to answer using this data set are:
 
-Are superbowl ads becoming more popular over the years? Are new superbowl ads more popular?
+* How does the popularity of different kinds of ads change over time? Are there events that help to contextualize this?
 
-Are there more comments on ads that are more or less popular?
+* What is the breakdown of ad categories across brands?
+
+* Are Superbowl ads becoming more popular on Youtube over the years? Are new Superbowl ads getting more views?
+
+* Are there more comments on ads that are more or less popular? Does more dislikes translate to more comments? More likes? Are there categories of ads or specific brands that we can identify a positive or negative relationship between the number of dislikes and the number of comments or the number of likes and the number of comments?
 
 
 ## 2. Data
 
+Taking a look at the data:
+
 ```{r load_data}
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
-youtube
+
+glimpse(youtube)
 ```
 
 
 ## 3. Data analysis plan
 
+To answer our overarching question about ad popularity over time, the response variable will be popularity and the explanatory variable will be year. We will create a new variable called popularity, the proportion of likes per total views on a given ad. We will explore the popularity of Superbowl ads that fall into each of the seven specified categories as well as the popularity of ads aired by each of the 10 brands. The following is a figure of the number of views on ads in the last 21 Superbowls:
+
+```{r views-on-ads}
+youtube %>%
+  filter(view_count < 2000000) %>%
+  ggplot(aes(x = year, y = view_count)) +
+  geom_jitter() +
+  labs(x = "Year",
+       y = "Number of Views",
+       title = "The Number of Superbowl Ad Youtube Video Views in the Last 21 Superbowls")
+```
+
+Next, we can visualize the trend in the number of likes on these ads. The figure below shows the number of likes on ads in the last 21 Superbowls:
+
+```{r likes-on-ads}
+youtube %>%
+  filter(like_count < 10000) %>%
+  ggplot(aes(x = year, y = like_count)) +
+  geom_jitter() +
+  labs(x = "Year",
+       y = "Number of Likes",
+       title = "The Number of Superbowl Ad Youtube Video Likes in the Last 21 Superbowls")
+```
+
+To analyze ad popularity by brand, we will create a figure of ad popularity over time, faceted by the 10 brands in our data set. The following is a figure of the number of views on ads in the last 21 Superbowls by brand:
+
+```{r views-by-brand}
+youtube %>%
+  filter(view_count < 1000000) %>%
+  ggplot(aes(x = year, y = view_count)) +
+  geom_jitter() +
+  facet_wrap(~ brand, ncol = 5) +
+  labs(x = "Year",
+       y = "Number of Views",
+       title = "The Number of Superbowl Ad Youtube Video Views in the Last 21 Superbowls")
+```
+
+Next, we can visualize the trend in the number of likes on these ads by brand. The figure below shows the number of likes on ads in the last 21 Superbowls:
+
+```{r likes-by-brand}
+youtube %>%
+  filter(like_count < 10000) %>%
+  ggplot(aes(x = year, y = like_count)) +
+  geom_jitter() +
+  facet_wrap(~ brand, ncol = 5) +
+  labs(x = "Year",
+       y = "Number of Likes",
+       title = "The Number of Superbowl Ad Youtube Video Likes in the Last 21 Superbowls")
+```
+
+Then, we can analyze the popularity of these ads. The following figure shows the popularity of ads in the last 21 Superbowls by brand:
+
+```{r popularity-by-brand}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count) %>%
+  ggplot(aes(x = year, y = likes_per_view)) +
+  geom_jitter() +
+  facet_wrap(~brand, ncol = 5) +
+  labs(x = "Year",
+       y = "Ad Popularity (Likes per View)",
+       title = "The Popularity of Superbowl Ad Youtube Videos by Brand")
+```
 
 
+To explore the relationship between the number of video comments and the other indicators of public receptiveness, the response variable will be the number of comments and the explanatory variable will be ad popularity, the number of likes, the number of dislikes, or the number of views. The figure below shows the number of comments on ads in the last 21 Superbowls:
+
+```{r comments-on-ads}
+youtube %>%
+  filter(comment_count < 2500) %>%
+  ggplot(aes(x = year, y = comment_count)) +
+  geom_jitter() +
+  labs(x = "Year",
+       y = "Number of Comments",
+       title = "The Number of Superbowl Ad Youtube Video Comments in the Last 21 Superbowls")
+```
+
+Below, we show one of these visualizations, the relationship between the number of comments and the number of dislikes on ads in the last 21 Superbowls:
+
+```{r comments-vs-dislikes}
+youtube %>%
+  filter(dislike_count < 10000) %>%
+  ggplot(aes(x = dislike_count, y = comment_count)) +
+  geom_jitter() +
+  labs(x = "Number of Dislikes",
+       y = "Number of Comments",
+       title = "The Number of Dislikes vs. The Number of Comments on Superbowl Ad Youtube Videos")
+```
+
+We also plan to explore this relationship by ad category and by brand. This last figure shows the relationship between the number of comments and the number of dislikes on ads in the last 21 Superbowls by brand:
+
+```{r comments-vs-dislikes-by-brand}
+youtube %>%
+  filter(dislike_count < 1000) %>%
+  ggplot(aes(x = dislike_count, y = comment_count)) +
+  geom_jitter() +
+  facet_wrap(~brand, ncol = 5) + 
+  labs(x = "Number of Dislikes",
+       y = "Number of Comments",
+       title = "The Number of Dislikes Vs. The Number of Comments on Superbowl Ads by Brand")
+```
+
+We then computed preliminary summary statistics to explore the Youtube video likes across the 10 brands:
+
+```{r summary-statistics-likes}
+youtube %>%
+  group_by(brand) %>%
+  summarise(mean_likes = mean(like_count, na.rm = TRUE),
+            median_likes = median(like_count, na.rm = TRUE),
+            sd_likes = sd(like_count, na.rm = TRUE)) %>%
+  arrange()
+```
+
+We followed the same process to explore the Youtube video views across the 10 brands:
+
+```{r summary-statistics-views}
+youtube %>%
+  group_by(brand) %>%
+  summarise(mean_views = mean(view_count, na.rm = TRUE),
+            median_views = median(view_count, na.rm = TRUE),
+            sd_views = sd(view_count, na.rm = TRUE)) %>%
+  arrange()
+```
+
+Then, we computed summary statistics to explore the number of ads that fall into a given category per brand:
+
+```{r count-categories}
+youtube %>%
+  group_by(brand) %>%
+  summarise(count_funny = sum(funny, na.rm = TRUE),
+            count_show_product_quickly = sum(show_product_quickly, na.rm = TRUE),
+            count_patriotic = sum(patriotic, na.rm = TRUE),
+            count_celebrity = sum(celebrity, na.rm = TRUE),
+            count_danger = sum(danger, na.rm = TRUE),
+            count_animals = sum(animals, na.rm = TRUE),
+            count_use_sex = sum(use_sex, na.rm = TRUE)) %>%
+  arrange()
+```
+
+
+What statistical method(s) will be useful in answering our question(s). 
+What results from these specific statistical methods are needed to support our hypothesized answers?
