@@ -329,5 +329,10 @@ youtube %>%
     ## #   count_use_sex <int>
 
 What statistical method(s) will be useful in answering our question(s).
+
+-   Average popularity of a given ad category across years of Superbowls
+
 What results from these specific statistical methods are needed to
 support our hypothesized answers?
+
+-   Increasing average in popularity of a given ad category
