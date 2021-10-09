@@ -45,7 +45,8 @@ The specific questions we want to answer using this data set are:
 
 ## 2. Data
 
-Taking a look at the data:
+We did not add our data to the /data folder since we loaded our data
+through the following link:
 
 ``` r
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
@@ -63,6 +64,8 @@ youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Taking a look at the data:
 
 ``` r
 glimpse(youtube)
