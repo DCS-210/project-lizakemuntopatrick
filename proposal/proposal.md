@@ -334,8 +334,15 @@ youtube %>%
 What statistical method(s) will be useful in answering our question(s).
 
 -   Average popularity of a given ad category across years of Superbowls
+    *Proportion of ads that have certian criteria per brand. *Mean
+    number of views for every year. \*Mean number of comments for data
+    that filters for top five most popular and top 5 unpopular ads
 
 What results from these specific statistical methods are needed to
 support our hypothesized answers?
 
--   Increasing average in popularity of a given ad category
+-   Increasing average in popularity of a given ad category Brands will
+    show a trend to market certain themes.
+-   Views will increase as time goes on
+-   Comments wils hopefully be more likely on either unpopular or
+    popular ads.
