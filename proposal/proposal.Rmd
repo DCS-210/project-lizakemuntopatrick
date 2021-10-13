@@ -54,6 +54,8 @@ youtube %>%
        title = "The Number of Superbowl Ad Youtube Video Views in the Last 21 Superbowls")
 ```
 
+From this figure, we see that most ads get less than 500,000 views, while outlier ads get up to 2,000,000 views. There is no clear relationship between year and number of views, but we are hoping to show that ad category and brand affect the number of views across Superbowl years. 
+
 Next, we can visualize the trend in the number of likes on these ads. The figure below shows the number of likes on ads in the last 21 Superbowls:
 
 ```{r likes-on-ads}
@@ -65,6 +67,8 @@ youtube %>%
        y = "Number of Likes",
        title = "The Number of Superbowl Ad Youtube Video Likes in the Last 21 Superbowls")
 ```
+
+From this figure, we see that most ads get less than 2,000 likes, while outlier ads get up to 6,000 likes. It appears that ads may be getting fewer likes in recent years, possibly due to Youtube's lack of engagement (as other platforms have gotten more popular). 
 
 To analyze ad popularity by brand, we will create a figure of ad popularity over time, faceted by the 10 brands in our data set. The following is a figure of the number of views on ads in the last 21 Superbowls by brand:
 
@@ -79,6 +83,8 @@ youtube %>%
        title = "The Number of Superbowl Ad Youtube Video Views in the Last 21 Superbowls")
 ```
 
+From this figure, we can see that brands like Bud Light, Budweiser and NFL get more views on their ads. This may be because these ads are associated with the Superbowl. 
+
 Next, we can visualize the trend in the number of likes on these ads by brand. The figure below shows the number of likes on ads in the last 21 Superbowls:
 
 ```{r likes-by-brand}
@@ -91,6 +97,8 @@ youtube %>%
        y = "Number of Likes",
        title = "The Number of Superbowl Ad Youtube Video Likes in the Last 21 Superbowls")
 ```
+
+From this figure, we can see that there are some brands that receive higher engagement on their ads. These brands are Budweiser, Coca-Cola and Pepsi. It's interesting that Bud Light gets a lot of views on their ads but not many likes compared to other brands. We will analyze this to see if some brands are more popular than others. 
 
 Then, we can analyze the popularity of these ads. The following figure shows the popularity of ads in the last 21 Superbowls by brand:
 
@@ -105,6 +113,7 @@ youtube %>%
        title = "The Popularity of Superbowl Ad Youtube Videos by Brand")
 ```
 
+From this figure, we can see that most brands receive less than 0.02 likes per view, with a few ads from Budlight and Budweiser getting more likes per view. We will see if this popularity depends on the category of ad that these brands are airing during the Superbowl.
 
 To explore the relationship between the number of video comments and the other indicators of public receptiveness, the response variable will be the number of comments and the explanatory variable will be ad popularity, the number of likes, the number of dislikes, or the number of views. The figure below shows the number of comments on ads in the last 21 Superbowls:
 
@@ -118,6 +127,8 @@ youtube %>%
        title = "The Number of Superbowl Ad Youtube Video Comments in the Last 21 Superbowls")
 ```
 
+From this figure, we can see that most videos receive less than 500 comments, but there are a few ads in the last 10 years that have received up to 2000 comments. We will explore these ads and analyze their popularity and ad category to explain this trend.
+
 Below, we show one of these visualizations, the relationship between the number of comments and the number of dislikes on ads in the last 21 Superbowls:
 
 ```{r comments-vs-dislikes}
@@ -129,6 +140,8 @@ youtube %>%
        y = "Number of Comments",
        title = "The Number of Dislikes vs. The Number of Comments on Superbowl Ad Youtube Videos")
 ```
+
+From this figure, we see that there may be a positive relationship between the number of dislikes and the number of comments. We may use dislikes per view and likes per view in an attempt to scale these raw numbers.  
 
 We also plan to explore this relationship by ad category and by brand. This last figure shows the relationship between the number of comments and the number of dislikes on ads in the last 21 Superbowls by brand:
 
@@ -143,6 +156,8 @@ youtube %>%
        title = "The Number of Dislikes Vs. The Number of Comments on Superbowl Ads by Brand")
 ```
 
+From this figure, we see that brands like Budweiser and the NFL receive more comments on ads with more dislikes. We wonder if this has to do with the ad category that these brands are airing during the Superbowl, and if these ads tend to be more problematic. 
+
 We then computed preliminary summary statistics to explore the Youtube video likes across the 10 brands:
 
 ```{r summary-statistics-likes}
@@ -154,16 +169,7 @@ youtube %>%
   arrange()
 ```
 
-We followed the same process to explore the Youtube video views across the 10 brands:
-
-```{r summary-statistics-views}
-youtube %>%
-  group_by(brand) %>%
-  summarise(mean_views = mean(view_count, na.rm = TRUE),
-            median_views = median(view_count, na.rm = TRUE),
-            sd_views = sd(view_count, na.rm = TRUE)) %>%
-  arrange()
-```
+Here, we can see that brands like Doritos and the NFL have the highest mean and median number of likes. We are hoping to explain this by the ad category and possibly the Youtube channel of these ads. 
 
 Then, we computed summary statistics to explore the number of ads that fall into a given category per brand:
 
@@ -180,17 +186,18 @@ youtube %>%
   arrange()
 ```
 
+From this, we can see that Budweiser airs the most patriotic ads, while Bud Light airs the most funny ads. We will see if these ad categories make these brand ads more or less popular.
 
-What statistical method(s) will be useful in answering our question(s). 
+The statistical methods that will be useful in answering our questions are:
 
 * Average popularity of a given ad category across years of Superbowls
-*Proportion of ads that have certain criteria per brand.
-*Mean number of views for every year.
-*Mean number of comments for data that filters for top five most popular and top 5 unpopular ads
+* Proportion of ads that have certain criteria per brand.
+* Mean number of views for every year.
+* Mean number of comments for data that filters for top five most popular and top 5 unpopular ads
 
-What results from these specific statistical methods are needed to support our hypothesized answers?
+The results from these specific statistical methods that are needed to support our hypothesized answers are:
 
 * Increasing average in popularity of a given ad category 
 Brands will show a trend to market certain themes.
 * Views will increase as time goes on
-* Comments wils hopefully be more likely on either unpopular or popular ads.
+* Comments will hopefully be more likely on either unpopular or popular ads.
