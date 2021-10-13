@@ -25,6 +25,7 @@ your project.
 ## Presentation
 
 Our presentation can be found [here](presentation/presentation.html).
+Our proposal can be found [here](proposal/proposal.html).
 
 ## Data
 
