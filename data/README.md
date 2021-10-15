@@ -4,6 +4,7 @@ We did not add our data to this folder since we found our data at the following 
 https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv
 
 We loaded our data with the following code:
+
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 
 
