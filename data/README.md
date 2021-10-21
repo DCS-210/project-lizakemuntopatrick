@@ -10,9 +10,6 @@ youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 
 Our data is 247 observations of 25 variables. 
 
-Then, include codebooks (variables, and their descriptions) for your data file(s)
-using the following format.
-
 ## Youtube
 
 - `year`: Superbowl year
