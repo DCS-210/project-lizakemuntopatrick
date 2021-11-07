@@ -1,6 +1,7 @@
 ---
 title: "Project Proposal"
 author: "Liza, Kemunto, and Patrick"
+date: "October 21, 2021"
 output: html_document
 ---
 
@@ -25,6 +26,7 @@ The specific questions we want to answer using this data set are:
 
 * Are there more comments on ads that are more or less popular? Does more dislikes translate to more comments? More likes? Are there categories of ads or specific brands that we can identify a positive or negative relationship between the number of dislikes and the number of comments or the number of likes and the number of comments?
 
+* Are ads published on official brand Youtube channels more popular than those posted on personal channels or channels that compile funny ads?
 
 ## 2. Data
 
@@ -186,7 +188,7 @@ youtube %>%
   arrange()
 ```
 
-From this, we can see that Budweiser airs the most patriotic ads, while Bud Light airs the most funny ads. We will see if these ad categories make these brand ads more or less popular.
+From this, we can see that Budweiser airs the most patriotic ads, while Bud Light airs the most funny ads. We will see if these ad categories make these brand ads more or less popular. We may make a pie chart using dips (a Superbowl reference of course!) to reflect the breakdown of ad types for each brand. Further, we're hoping to use a faceted bar plot to view the popularity of various ad categories by brand to compare the effectiveness of different ad categories across brands.  
 
 The statistical methods that will be useful in answering our questions are:
 
@@ -194,10 +196,12 @@ The statistical methods that will be useful in answering our questions are:
 * Proportion of ads that have certain criteria per brand.
 * Mean number of views for every year.
 * Mean number of comments for data that filters for top five most popular and top 5 unpopular ads
+* Correlation between number of comments and ad popularity
+* Correlation between channel type and ad popularity
 
 The results from these specific statistical methods that are needed to support our hypothesized answers are:
 
 * Increasing average in popularity of a given ad category 
 Brands will show a trend to market certain themes.
 * Views will increase as time goes on
-* Comments will hopefully be more likely on either unpopular or popular ads.
+* There will be a positive or negative correlation between number of comments and ad popularity that will reflect that ads that are either well-liked or hated by the public receive the highest number of comments. 
