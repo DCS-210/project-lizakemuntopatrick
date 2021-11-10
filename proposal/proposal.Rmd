@@ -10,8 +10,8 @@ library(tidyverse)
 library(broom)
 library(streamgraph) # to install stream graph run the below
 #devtools::install_github("hrbrmstr/streamgraph")
-#install.packages("shiny")
-library(shiny)
+library(ggstream)
+library(ggplot2)
 ```
 
 ## 1. Introduction
@@ -196,7 +196,29 @@ From this, we can see that Budweiser airs the most patriotic ads, while Bud Ligh
 
 
 
-```{r}
+```{r streamgraph}
+
+ad_counts <- youtube %>%
+  group_by(year) %>%
+  summarise(count_funny = sum(funny, na.rm = TRUE),
+            count_show_product_quickly = sum(show_product_quickly, na.rm = TRUE),
+            count_patriotic = sum(patriotic, na.rm = TRUE),
+            count_celebrity = sum(celebrity, na.rm = TRUE),
+            count_danger = sum(danger, na.rm = TRUE),
+            count_animals = sum(animals, na.rm = TRUE),
+            count_use_sex = sum(use_sex, na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type")
+
+
+cols <- c("#FFB400", "#FFC740", "#C20008", "#FF020D", "#13AFEF", cols <- c("#FFB400", "#FFC740", "#C20008", "#FF020D", "#ACA4E2"))
+
+ggplot(ad_counts, aes(x = year,
+                    y = count,
+                    fill = type))+
+  geom_stream(color = 1, lwd = 0.25, n_grid = 100)+
+  scale_fill_manual(values = cols)
+  theme_minimal()
+  guides(fill = guide_legend(title = "Ad Category"))
 
 
 ```
