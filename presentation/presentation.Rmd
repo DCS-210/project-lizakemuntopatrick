@@ -43,6 +43,9 @@ youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 
 * Clear that the Super Bowl has an extremely high viewership, ads that air reach a huge number of people and is thus an opportunity for brands to build reputation and revenue
 
+--
+* Brands heavily invest into their ads because there is evidence that supports the fact that more viewership leads to more consumption of the branded product. They use their ads to build complementary relationship between the brand and sports viewership more broadly.
+
 ```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
 
 knitr::include_graphics("img/superbowl.png")
@@ -129,6 +132,9 @@ brand_ad_production
 
 ## How has ad production changed over time by ad category?
 
+What context can inform the use of specific ad categories over time?
+
+
 ```{r category-streamgraph, echo = FALSE}
 ad_counts <- youtube %>%
   group_by(year) %>%
@@ -147,11 +153,17 @@ pp
 
 ---
 
-# Hello World
+#What context can inform the use of specific ad categories over time?
 
-- Click the `Knit` button to compile your presentation
 
-- Make sure to commit and push all resulting files to your GitHub repo
+  * Presidential Elections
+  
+--
+
+  * Social/Political movements
+  
+--
+sure to commit and push all resulting files to your GitHub repo
 
 ---
 
