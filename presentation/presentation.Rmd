@@ -83,6 +83,27 @@ How can we measure ad popularity from our dataset?
 
 ---
 
+## Likes vs. Views
+
+```{r likes-vs-views, echo = FALSE}
+
+youtube %>%
+  filter(like_count < 10000) %>%
+  ggplot(aes(x = view_count, y = like_count)) +
+  geom_jitter() +
+  labs(x = "Number of Views",
+       y = "Number of Likes",
+       title = "Number of Views vs. Number of Likes") +
+  geom_smooth(method = "lm", se = FALSE, color = "orange")
+
+likes_views_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(like_count ~ view_count, data = youtube)
+
+```
+
+---
+
 ## How can we define an ad popularity metric?
 
 * To avoid comparing raw view or like counts across Youtube videos of Super Bowl ads, we decided to define an ad popularity variable likes/view
@@ -103,7 +124,7 @@ How can we measure ad popularity from our dataset?
 
 <iframe width="1100" height="515" src="https://www.youtube.com/embed/w_ZEGUX4YnI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
----v
+---
 
 ## How has ad production changed over time by brand?
 
@@ -112,16 +133,16 @@ How can we measure ad popularity from our dataset?
 ```{r brand-streamgraph, echo = FALSE}
 brand_counts <- youtube %>%
   group_by(year) %>%
-  summarise(count_toyota = sum(brand == "Toyota", na.rm = TRUE),
-            count_doritos = sum(brand == "Doritos", na.rm = TRUE), 
-            count_e_trade = sum(brand == "E-Trade", na.rm = TRUE),
-            count_budweiser = sum(brand == "Budweiser", na.rm = TRUE),
-            count_bud_light = sum(brand == "Bud Light", na.rm = TRUE),
-            count_pepsi = sum(brand == "Pepsi", na.rm = TRUE),
-            count_coca_cola = sum(brand == "Coca-Cola", na.rm = TRUE),
-            count_hyundai = sum(brand == "Hyundai", na.rm = TRUE),
-            count_kia = sum(brand == "Kia", na.rm = TRUE),
-            count_nfl = sum(brand == "NFL", na.rm = TRUE)) %>%
+  summarise("Toyota" = sum(brand == "Toyota", na.rm = TRUE),
+            "Doritos" = sum(brand == "Doritos", na.rm = TRUE), 
+            "E-Trade" = sum(brand == "E-Trade", na.rm = TRUE),
+            "Budweiser" = sum(brand == "Budweiser", na.rm = TRUE),
+            "Bud Light" = sum(brand == "Bud Light", na.rm = TRUE),
+            "Pepsi" = sum(brand == "Pepsi", na.rm = TRUE),
+            "Coca Cola" = sum(brand == "Coca-Cola", na.rm = TRUE),
+            "Hyundai" = sum(brand == "Hyundai", na.rm = TRUE),
+            "Kia" = sum(brand == "Kia", na.rm = TRUE),
+            "NFL" = sum(brand == "NFL", na.rm = TRUE)) %>%
   pivot_longer(cols = -year, values_to = "count", names_to = "type") 
 
 brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
@@ -162,26 +183,14 @@ pp
 
   * Social/Political movements
   
---
-sure to commit and push all resulting files to your GitHub repo
 
 ---
 
-class: inverse, middle, center
-
-# Using xaringan
+## Limitations of the Dataset
 
 ---
 
-# xaringan
-
-- The presentation is created using the `xaringan` package
-
-- Use `---` to separate slides and `--` for incremental builds
-
---
-
-- Like this
+## Suggested next steps
 
 ---
 
