@@ -1,12 +1,12 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle (if any)"
-author: "Team name <br> Names of team members"
-institute: "University of Edinburgh"
-date: "`r Sys.Date()`"
+title: "Lessons to be Learned from Super Bowl Advertisements"
+subtitle: ""
+author: "Liza Dubinsky, Kemunto Ongera, Patrick Bergin"
+institute: "Bates College"
+date: '11 November, 2021'
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
+    css: xaringan-themer2.css
     lib_dir: libs
     nature:
       ratio: "16:9"
@@ -15,6 +15,7 @@ output:
       countIncrementalSlides: false
 ---
 
+
 ```{r load-packages, include = FALSE}
 # Add any additional packages you need to this chunk
 library(tidyverse)
@@ -22,6 +23,7 @@ library(tidymodels)
 library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
+library(streamgraph)
 ```
 
 ```{r setup, include=FALSE}
@@ -30,33 +32,147 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 ```
 
 ```{r load-data, include=FALSE}
-# Load your data here
+youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 ```
 
-```{r}
-style_xaringan(
-  title_slide_background_image = "img/confetti.jpg"
-)
+## Why is the Super Bowl such a big deal for brands?
+
+* The 2021 edition of the Super Bowl, which saw the Tampa Bay Buccaneers emerge victorious against the Kansas City Chiefs was watched by 91.63 million viewers in the United States
+
+--
+
+* Clear that the Super Bowl has an extremely high viewership, ads that air reach a huge number of people and is thus an opportunity for brands to build reputation and revenue
+
+--
+* Brands heavily invest into their ads because there is evidence that supports the fact that more viewership leads to more consumption of the branded product. They use their ads to build complementary relationship between the brand and sports viewership more broadly.
+
+```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
+
+knitr::include_graphics("img/superbowl.png")
+
 ```
-
-
-class: center, middle
-
-## A statement of the overall goal / research question
 
 ---
 
-class: inverse, center, middle
+## A little about our data
 
-# Section title
+* We used Superbowl ad data from the past 20 years to analyze trends in ad popularity and production. 
+
+--
+
+* The data comes from FiveThirtyEight, who published a corresponding article "According to Superbowl Ads, Americans Love America, Animals and Sex" in February, 2021. 
+
+--
+
+* The data was collected by watching and evaluating 233 ads on Youtube from the 10 brands that aired the most in the last 21 Super Bowls (according to Superbowl-ads.com) using seven criteria. 
+
+```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='right'}
+
+knitr::include_graphics("img/tinytuesday.png")
+
+```
+
+---
+## Who is the target audience?
+
+* According to data from Statista, there is a 47% likehood for males to watch the Superbowl compared to the 28% likehood for women.
+
+--
+
+* The age demographic is mainly between 18 - 49 years old.
+
+
+---
+## How does Youtube video engagement inform ad popularity?
+
+* Can we predict what will make a Super Bowl ad published on Youtube more popular than another?
+
+--
+
+How can we measure ad popularity from our dataset?
 
 ---
 
-# Hello World
+## How can we define an ad popularity metric?
 
-- Click the `Knit` button to compile your presentation
+* To avoid comparing raw view or like counts across Youtube videos of Super Bowl ads, we decided to define an ad popularity variable likes/view
 
-- Make sure to commit and push all resulting files to your GitHub repo
+--
+
+* According to this metric, which video do you think is more "popular"?
+
+---
+
+## Advertisement 1:
+
+<iframe width="1100" height="515" src="https://www.youtube.com/embed/YQo0TfuueaY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+## Advertisement 2:
+
+<iframe width="1100" height="515" src="https://www.youtube.com/embed/w_ZEGUX4YnI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+## How has ad production changed over time by brand?
+
+* Here
+
+```{r brand-streamgraph, echo = FALSE}
+brand_counts <- youtube %>%
+  group_by(year) %>%
+  summarise(count_toyota = sum(brand == "Toyota", na.rm = TRUE),
+            count_doritos = sum(brand == "Doritos", na.rm = TRUE), 
+            count_e_trade = sum(brand == "E-Trade", na.rm = TRUE),
+            count_budweiser = sum(brand == "Budweiser", na.rm = TRUE),
+            count_bud_light = sum(brand == "Bud Light", na.rm = TRUE),
+            count_pepsi = sum(brand == "Pepsi", na.rm = TRUE),
+            count_coca_cola = sum(brand == "Coca-Cola", na.rm = TRUE),
+            count_hyundai = sum(brand == "Hyundai", na.rm = TRUE),
+            count_kia = sum(brand == "Kia", na.rm = TRUE),
+            count_nfl = sum(brand == "NFL", na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type") 
+
+brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+brand_ad_production 
+```
+
+---
+
+## How has ad production changed over time by ad category?
+
+What context can inform the use of specific ad categories over time?
+
+
+```{r category-streamgraph, echo = FALSE}
+ad_counts <- youtube %>%
+  group_by(year) %>%
+  summarise(count_funny = sum(funny, na.rm = TRUE),
+            count_show_product_quickly = sum(show_product_quickly, na.rm = TRUE), 
+            count_patriotic = sum(patriotic, na.rm = TRUE),
+            count_celebrity = sum(celebrity, na.rm = TRUE),
+            count_danger = sum(danger, na.rm = TRUE),
+            count_animals = sum(animals, na.rm = TRUE),
+            count_use_sex = sum(use_sex, na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type")
+
+pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+pp
+```
+
+---
+#What context can inform the use of specific ad categories over time?
+
+
+  * Presidential Elections
+  
+--
+
+  * Social/Political movements
+  
+
+--
 
 ---
 
