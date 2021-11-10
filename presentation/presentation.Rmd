@@ -162,10 +162,17 @@ pp
 ```
 
 ---
+#What context can inform the use of specific ad categories over time?
 
+
+  * Presidential Elections
+  
+--
+
+  * Social/Political movements
+  
 
 --
-sure to commit and push all resulting files to your GitHub repo
 
 ---
 
