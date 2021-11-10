@@ -103,7 +103,7 @@ How can we measure ad popularity from our dataset?
 
 <iframe width="1100" height="515" src="https://www.youtube.com/embed/w_ZEGUX4YnI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
----
+---v
 
 ## How has ad production changed over time by brand?
 
@@ -138,13 +138,13 @@ What context can inform the use of specific ad categories over time?
 ```{r category-streamgraph, echo = FALSE}
 ad_counts <- youtube %>%
   group_by(year) %>%
-  summarise(count_funny = sum(funny, na.rm = TRUE),
-            count_show_product_quickly = sum(show_product_quickly, na.rm = TRUE), 
-            count_patriotic = sum(patriotic, na.rm = TRUE),
-            count_celebrity = sum(celebrity, na.rm = TRUE),
-            count_danger = sum(danger, na.rm = TRUE),
-            count_animals = sum(animals, na.rm = TRUE),
-            count_use_sex = sum(use_sex, na.rm = TRUE)) %>%
+  summarise("Funny" = sum(funny, na.rm = TRUE),
+            "Show Product Quickly" = sum(show_product_quickly, na.rm = TRUE), 
+            "Patriotic" = sum(patriotic, na.rm = TRUE),
+            "Celebrity" = sum(celebrity, na.rm = TRUE),
+            "Danger" = sum(danger, na.rm = TRUE),
+            "Animals" = sum(animals, na.rm = TRUE),
+            "Use Sex" = sum(use_sex, na.rm = TRUE)) %>%
   pivot_longer(cols = -year, values_to = "count", names_to = "type")
 
 pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
