@@ -183,14 +183,28 @@ pp
 
   * Social/Political movements
   
+---
+
+## Is it worth it for brands to post their ads on their official Youtube channels?
+
+* Insert visualization of average popularity for videos on official channels vs. unofficial channels (bar plot)
 
 ---
 
 ## Limitations of the Dataset
 
+* categories are evaluated as T/F without a scale of "funniness" 
+
+* Youtube videos vs. real responses to ads aired during Super Bowl, disconnect between what's popular during the Super Bowl and who goes to watch videos on Youtube 
+
+
 ---
 
 ## Suggested next steps
+
+* Propose better category to gauge ad popularity (music, emotion, brand popularity, a/b list celebrity) 
+
+* Data driven by survey rather than Youtube engagement to accurately estimate ad popularity in real time rather than those who choose to view Youtube ads from the Super Bowl after the fact
 
 ---
 
