@@ -73,6 +73,16 @@ knitr::include_graphics("img/tinytuesday.png")
 ```
 
 ---
+## Who is the target audience?
+
+* According to data from Statista, there is a 47% likehood for males to watch the Superbowl compared to the 28% likehood for women.
+
+--
+
+* The age demographic is mainly between 18 - 49 years old.
+
+
+---
 ## How does Youtube video engagement inform ad popularity?
 
 * Can we predict what will make a Super Bowl ad published on Youtube more popular than another?
