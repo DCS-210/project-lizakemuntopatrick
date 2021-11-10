@@ -194,33 +194,40 @@ youtube %>%
 
 From this, we can see that Budweiser airs the most patriotic ads, while Bud Light airs the most funny ads. We will see if these ad categories make these brand ads more or less popular. We may make a pie chart using dips (a Superbowl reference of course!) to reflect the breakdown of ad types for each brand. Further, we're hoping to use a faceted bar plot to view the popularity of various ad categories by brand to compare the effectiveness of different ad categories across brands.  
 
+```{r brand-streamgraph, echo = FALSE}
+brand_counts <- youtube %>%
+  group_by(year) %>%
+  summarise("Toyota" = sum(brand == "Toyota", na.rm = TRUE),
+            "Doritos" = sum(brand == "Doritos", na.rm = TRUE), 
+            "E-Trade" = sum(brand == "E-Trade", na.rm = TRUE),
+            "Budweiser" = sum(brand == "Budweiser", na.rm = TRUE),
+            "Bud Light" = sum(brand == "Bud Light", na.rm = TRUE),
+            "Pepsi" = sum(brand == "Pepsi", na.rm = TRUE),
+            "Coca Cola" = sum(brand == "Coca-Cola", na.rm = TRUE),
+            "Hyundai" = sum(brand == "Hyundai", na.rm = TRUE),
+            "Kia" = sum(brand == "Kia", na.rm = TRUE),
+            "NFL" = sum(brand == "NFL", na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type") 
+
+brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+brand_ad_production 
+```
 
 
-```{r streamgraph}
-
+```{r category-streamgraph, echo = FALSE}
 ad_counts <- youtube %>%
   group_by(year) %>%
-  summarise(count_funny = sum(funny, na.rm = TRUE),
-            count_show_product_quickly = sum(show_product_quickly, na.rm = TRUE),
-            count_patriotic = sum(patriotic, na.rm = TRUE),
-            count_celebrity = sum(celebrity, na.rm = TRUE),
-            count_danger = sum(danger, na.rm = TRUE),
-            count_animals = sum(animals, na.rm = TRUE),
-            count_use_sex = sum(use_sex, na.rm = TRUE)) %>%
+  summarise("Funny" = sum(funny, na.rm = TRUE),
+            "Show Product Quickly" = sum(show_product_quickly, na.rm = TRUE), 
+            "Patriotic" = sum(patriotic, na.rm = TRUE),
+            "Celebrity" = sum(celebrity, na.rm = TRUE),
+            "Danger" = sum(danger, na.rm = TRUE),
+            "Animals" = sum(animals, na.rm = TRUE),
+            "Use Sex" = sum(use_sex, na.rm = TRUE)) %>%
   pivot_longer(cols = -year, values_to = "count", names_to = "type")
 
-
-cols <- c("#FFB400", "#FFC740", "#C20008", "#FF020D", "#13AFEF", cols <- c("#FFB400", "#FFC740", "#C20008", "#FF020D", "#ACA4E2"))
-
-ggplot(ad_counts, aes(x = year,
-                    y = count,
-                    fill = type))+
-  geom_stream(color = 1, lwd = 0.25, n_grid = 100)+
-  scale_fill_manual(values = cols)
-  theme_minimal()
-  guides(fill = guide_legend(title = "Ad Category"))
-
-
+pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+pp
 ```
 
 
@@ -233,7 +240,7 @@ youtube %>%
     geom_violin()+
     labs(x = "Funny ads",
      y = "Popularity",
-     title = "The popularity of Funny ads")
+     title = "The Popularity of Funny ads")
 ```
 
 ```{r}
@@ -244,10 +251,66 @@ youtube %>%
     geom_violin()+
     labs(x = "Patriotic ads",
      y = "Popularity",
-     title = "The popularity of Patriotic ads")
+     title = "The Popularity of Patriotic ads")
+```
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = celebrity,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Ads with Celebrity",
+          y = "Popularity",
+     title = "The Popularity of ads with Celebrities")
 ```
 
 
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = danger,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Danger ads",
+     y = "Popularity",
+     title = "The Popularity of Danger ads")
+```
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = show_product_quickly,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Ads which show the product quickly",
+     y = "Popularity",
+     title = "The Popularity of Ads which show the product quickly")
+```
+
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = use_sex,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Ads which use sex",
+     y = "Popularity",
+     title = "The Popularity of Ads which use sex")
+```
+
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = animals,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Ads which show animals",
+     y = "Popularity",
+     title = "The Popularity of Ads which show animals")
+```
+
+```{r}
+
+```
 
 
 The statistical methods that will be useful in answering our questions are:
