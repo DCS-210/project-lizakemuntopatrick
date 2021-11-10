@@ -10,6 +10,8 @@ library(tidyverse)
 library(broom)
 library(streamgraph) # to install stream graph run the below
 #devtools::install_github("hrbrmstr/streamgraph")
+#install.packages("shiny")
+library(shiny)
 ```
 
 ## 1. Introduction
@@ -195,21 +197,34 @@ From this, we can see that Budweiser airs the most patriotic ads, while Bud Ligh
 
 
 ```{r}
-ad_counts <- youtube %>%
-                group_by(year) %>%
-                summarise(count_funny = sum(funny, na.rm = TRUE),
-                          count_show_product_quickly = sum(show_product_quickly, na.rm = TRUE),
-                          count_patriotic = sum(patriotic, na.rm = TRUE),
-                          count_celebrity = sum(celebrity, na.rm = TRUE),
-                          count_danger = sum(danger, na.rm = TRUE),
-                          count_animals = sum(animals, na.rm = TRUE),
-                          count_use_sex = sum(use_sex, na.rm = TRUE)) %>%
-                pivot_longer(cols = -year, values_to = "count", names_to = "type")
 
-pp <- streamgraph(ad_counts, key="type", value="count", date="year", height="300px", width="1000px")
-pp
-            
+
 ```
+
+
+            
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = funny,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Funny ads",
+     y = "Popularity",
+     title = "The popularity of Funny ads")
+```
+
+```{r}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count)%>%
+  ggplot(aes(x = patriotic,
+             y = likes_per_view))+
+    geom_violin()+
+    labs(x = "Patriotic ads",
+     y = "Popularity",
+     title = "The popularity of Patriotic ads")
+```
+
 
 
 
