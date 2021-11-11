@@ -177,10 +177,10 @@ likes_views_fit <- linear_reg() %>%
 
 .pull-left[
 
-``` {r violin-plot-funny, echo = FALSE, message = FALSE}
+``` {r violin-plot-funny, echo = FALSE, message = FALSE, warning = FALSE, out.width = "100%"}
 youtube %>%
-  ggplot(data = youtube, 
-         mapping = aes(x = funny, 
+  filter(title != "Frank the Monkey Bud Light") %>%
+  ggplot(mapping = aes(x = funny, 
                        y = ad_popularity)) +
   geom_violin() + 
   labs(title = "Ad Popularity of Funny and Not Funny Ads",
@@ -198,12 +198,12 @@ youtube %>%
 
 
 .pull-left[
-``` {r violin-plot-patriotic, echo = FALSE}
+``` {r violin-plot-patriotic, echo = FALSE, warning = FALSE, out.width = "100%"}
 youtube %>%
-  ggplot(data = youtube, 
-         mapping = aes(x = patriotic, 
+  filter(title != "Frank the Monkey Bud Light") %>%
+  ggplot(mapping = aes(x = patriotic, 
                        y = ad_popularity)) +
-  geom_violin() + 
+ geom_violin() + 
   labs(title = "Ad Popularity of Patriotic and Non-Patriotic Ads",
        x = "Patriotic Ad Category",
        y = "Ad Popularity")
@@ -278,10 +278,11 @@ youtube %>%
   summarise(avg_ad_popularity = mean(ad_popularity, na.rm = TRUE)) %>%
   ggplot(aes(x = official, y = avg_ad_popularity, fill = official)) +
   geom_col() +
+  scale_fill_manual(values=c("#0000FF", "#FFFF00")) +
   labs(title = "Average Ad Popularity by Channel Type",
        x = "Channel Type",
        y = "Average Ad Popularity",
-       fill = "Channel Type")
+       fill = "Channel Type") 
 ```
 
 ---
