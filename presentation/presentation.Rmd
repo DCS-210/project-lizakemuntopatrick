@@ -6,7 +6,7 @@ institute: "Bates College"
 date: '11 November, 2021'
 output:
   xaringan::moon_reader:
-    css: xaringan-themer2.css
+    css: xaringan-themer.css
     lib_dir: libs
     nature:
       ratio: "16:9"
@@ -71,55 +71,64 @@ youtube <- youtube %>%
 
 ## Why is the Super Bowl such a big deal for brands?
 
+.pull-left[
 * The 2021 edition of the Super Bowl, which saw the Tampa Bay Buccaneers emerge victorious against the Kansas City Chiefs was watched by 91.63 million viewers in the United States
 
---
 
 * Clear that the Super Bowl has an extremely high viewership, ads that air reach a huge number of people and is thus an opportunity for brands to build reputation and revenue
 
---
+
 * Brands heavily invest into their ads because there is evidence that supports the fact that more viewership leads to more consumption of the branded product. They use their ads to build complementary relationship between the brand and sports viewership more broadly.
 
+]
+
+.pull-right[
 ```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
 
 knitr::include_graphics("img/superbowl.png")
 
 ```
-
+]
 ---
 
 ## A little about our data
 
+.pull-right[
 * We used Superbowl ad data from the past 20 years to analyze trends in ad popularity and production. 
 
---
 
 * The data comes from FiveThirtyEight, who published a corresponding article "According to Superbowl Ads, Americans Love America, Animals and Sex" in February, 2021. 
 
---
 
 * The data was collected by watching and evaluating 233 ads on Youtube from the 10 brands that aired the most in the last 21 Super Bowls (according to Superbowl-ads.com) using seven criteria. 
+]
 
-```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='right'}
+.pull-left[
+
+```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='left'}
 
 knitr::include_graphics("img/tinytuesday.png")
 
 ```
-
+]
 ---
+
 ## How does Youtube video engagement inform ad popularity?
 
+.pull-left[
 * Can we predict what will make a Super Bowl ad published on Youtube more popular than another?
 
---
+* How can we measure ad popularity from our dataset?
+]
 
-How can we measure ad popularity from our dataset?
 
 ---
 
 ## Likes vs. Views
 
-```{r likes-vs-views, echo = FALSE}
+* Outlier video is at link: https://www.youtube.com/watch?v=TG4giyL-4Sk
+
+```{r likes-vs-views, echo = FALSE, message=FALSE, out.width = "70%"}
 youtube %>%
   filter(like_count < 10000) %>%
   ggplot(aes(x = view_count, y = like_count)) +
@@ -134,6 +143,7 @@ likes_views_fit <- linear_reg() %>%
   fit(like_count ~ view_count, data = youtube)
 
 ```
+
 
 ---
 
@@ -161,6 +171,8 @@ likes_views_fit <- linear_reg() %>%
 
 ## How do ad categories influence an ad's popularity?
 
+* Outlier video is at link: https://www.youtube.com/watch?v=mjN3OY9Eefk
+
 ``` {r violin-plot-funny, echo = FALSE}
 youtube %>%
   ggplot(data = youtube, 
@@ -175,6 +187,8 @@ youtube %>%
 ---
 
 ## How do ad categories influence an ad's popularity?
+
+* Outlier video is at link: https://www.youtube.com/watch?v=mjN3OY9Eefk
 
 ``` {r violin-plot-patriotic, echo = FALSE}
 youtube %>%
