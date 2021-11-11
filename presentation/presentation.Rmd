@@ -167,7 +167,7 @@ youtube %>%
          mapping = aes(x = funny, 
                        y = ad_popularity)) +
   geom_violin() + 
-  labs(title = "Ad Popularity of Patriotic and Non-Patriotic Ads",
+  labs(title = "Ad Popularity of Funny and Not Funny Ads",
        x = "Funny Ad Category",
        y = "Ad Popularity")
 ```
