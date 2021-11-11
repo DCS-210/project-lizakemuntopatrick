@@ -37,5 +37,23 @@ mine.heatmap
 data <- as.matrix(countsperyear)
 heatmap(data)
 
-*Neeed to get them to interact*
-*Maybe add Case When?
+#Neeed to get them to interact*
+#Maybe add Case When?
+
+
+youtube %>% 
+  mutate(type = as.factor(str_c(patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly))) %>%
+  select(type) %>%
+  count(type) %>%
+  arrange(desc(n)) %>%
+  rename(Funny_and_Show_Product_Quickly = FALSEFALSETRUEFALSEFALSEFALSETRUE)
+  
+
+
+youtube %>% 
+  select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
+  pivot_longer(cols = -id, values_to = "logical", names_to = "type") %>%
+  count(logical, type) %>%
+  spread(type, logical, fill=0, drop=FALSE)
+  
+  
