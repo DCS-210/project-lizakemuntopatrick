@@ -35,6 +35,40 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 ```
 
+
+```{r clean-data, include = FALSE}
+youtube <- youtube %>%
+  filter(view_count > 1000) %>%
+  mutate(brand = brand,
+         brand = case_when(
+           brand %in% ("Hynudai") ~ "Hyundai",
+           TRUE ~ brand),
+         ad_popularity = like_count/view_count,
+         brand_type = case_when(
+           brand %in% c("Hyundai", "Kia", "Toyota") ~ "Cars",
+           brand %in% c("Budweiser", "Bud Light") ~ "Beer",
+           brand %in% c("Coca-Cola", "Pepsi", "Doritos") ~ "Junk Food",
+           brand %in% ("E-Trade") ~ "E-Trade",
+           brand %in% ("NFL") ~ "NFL"),
+         official = if_else(channel_title %in% c("Bud Light",
+                                  "Budweiser",
+                                  "CBS",
+                                  "Coca-Cola",
+                                  "GameofThrones",
+                                  "Hyundai Chile",
+                                  "Kia Delray",
+                                  "KIA OMAN",
+                                  "NFL",
+                                  "USA TODAY",
+                                  "USA TODAY SPORTS",
+                                  "Wall Street Journal",
+                                  "World Hyundai Matteson",
+                                  "Alpha SQUAD official",
+                                  "Hyundai Omsk Official",
+                                  "CBS"), "Official", "Unofficial"))
+
+```
+
 ## Why is the Super Bowl such a big deal for brands?
 
 * The 2021 edition of the Super Bowl, which saw the Tampa Bay Buccaneers emerge victorious against the Kansas City Chiefs was watched by 91.63 million viewers in the United States
@@ -86,7 +120,6 @@ How can we measure ad popularity from our dataset?
 ## Likes vs. Views
 
 ```{r likes-vs-views, echo = FALSE}
-
 youtube %>%
   filter(like_count < 10000) %>%
   ggplot(aes(x = view_count, y = like_count)) +
@@ -123,6 +156,36 @@ likes_views_fit <- linear_reg() %>%
 ## Advertisement 2:
 
 <iframe width="1100" height="515" src="https://www.youtube.com/embed/w_ZEGUX4YnI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+## How do ad categories influence an ad's popularity?
+
+``` {r violin-plot-funny, echo = FALSE}
+youtube %>%
+  ggplot(data = youtube, 
+         mapping = aes(x = funny, 
+                       y = ad_popularity)) +
+  geom_violin() + 
+  labs(title = "Ad Popularity of Patriotic and Non-Patriotic Ads",
+       x = "Funny Ad Category",
+       y = "Ad Popularity")
+```
+
+---
+
+## How do ad categories influence an ad's popularity?
+
+``` {r violin-plot-patriotic, echo = FALSE}
+youtube %>%
+  ggplot(data = youtube, 
+         mapping = aes(x = patriotic, 
+                       y = ad_popularity)) +
+  geom_violin() + 
+  labs(title = "Ad Popularity of Patriotic and Non-Patriotic Ads",
+       x = "Patriotic Ad Category",
+       y = "Ad Popularity")
+```
 
 ---
 
@@ -187,7 +250,17 @@ pp
 
 ## Is it worth it for brands to post their ads on their official Youtube channels?
 
-* Insert visualization of average popularity for videos on official channels vs. unofficial channels (bar plot)
+```{r channel-type-bar-plot, echo= FALSE}
+youtube %>%
+  group_by(official) %>%
+  summarise(avg_ad_popularity = mean(ad_popularity, na.rm = TRUE)) %>%
+  ggplot(aes(x = official, y = avg_ad_popularity, fill = official)) +
+  geom_col() +
+  labs(title = "Average Ad Popularity by Channel Type",
+       x = "Channel Type",
+       y = "Average Ad Popularity",
+       fill = "Channel Type")
+```
 
 ---
 
