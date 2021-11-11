@@ -171,9 +171,13 @@ likes_views_fit <- linear_reg() %>%
 
 ## How do ad categories influence an ad's popularity?
 
+.pull-right[ 
 * Outlier video is at link: https://www.youtube.com/watch?v=mjN3OY9Eefk
+]
 
-``` {r violin-plot-funny, echo = FALSE}
+.pull-left[
+
+``` {r violin-plot-funny, echo = FALSE, message = FALSE}
 youtube %>%
   ggplot(data = youtube, 
          mapping = aes(x = funny, 
@@ -183,13 +187,17 @@ youtube %>%
        x = "Funny Ad Category",
        y = "Ad Popularity")
 ```
+]
 
 ---
 
 ## How do ad categories influence an ad's popularity?
-
+.pull-right[ 
 * Outlier video is at link: https://www.youtube.com/watch?v=mjN3OY9Eefk
+]
 
+
+.pull-left[
 ``` {r violin-plot-patriotic, echo = FALSE}
 youtube %>%
   ggplot(data = youtube, 
@@ -200,7 +208,7 @@ youtube %>%
        x = "Patriotic Ad Category",
        y = "Ad Popularity")
 ```
-
+]
 ---
 
 ## How has ad production changed over time by brand?
