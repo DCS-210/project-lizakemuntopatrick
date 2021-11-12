@@ -1,6 +1,6 @@
-Project title
+Lessons to be Learned from Super Bowl Advertisements
 ================
-by Team name
+by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 
 ## Summary
 
