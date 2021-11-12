@@ -208,6 +208,24 @@ youtube %>%
        y = "Ad Popularity")
 ```
 ]
+
+---
+
+## How do different brands influence an ad's popularity?
+
+*Here 
+
+```{r popularity-by-brand, echo = FALSE, message=FALSE, out.width = "70%"}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count) %>%
+  ggplot(aes(x = year, y = likes_per_view, color = brand)) +
+  geom_violin() +
+  facet_wrap(~brand, ncol = 5) +
+  labs(x = "Year",
+       y = "Ad Popularity (Likes per View)",
+       title = "The Popularity of Superbowl Ad Youtube Videos by Brand")
+```
+---
 ---
 
 ## How has ad production changed over time by brand?
