@@ -1,9 +1,9 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle (if any)"
-author: "Team name <br> Names of team members"
-institute: "University of Edinburgh"
-date: "`r Sys.Date()`"
+title: "Lessons to be Learned from Super Bowl Advertisements"
+subtitle: ""
+author: "Liza Dubinsky, Kemunto Ongera, Patrick Bergin"
+institute: "Bates College"
+date: '11 November, 2021'
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -15,6 +15,7 @@ output:
       countIncrementalSlides: false
 ---
 
+
 ```{r load-packages, include = FALSE}
 # Add any additional packages you need to this chunk
 library(tidyverse)
@@ -22,59 +23,301 @@ library(tidymodels)
 library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
+library(streamgraph)
 ```
 
 ```{r setup, include=FALSE}
 # For better figure resolution
-knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "100%")
 ```
 
 ```{r load-data, include=FALSE}
-# Load your data here
-```
-
-```{r}
-style_xaringan(
-  title_slide_background_image = "img/confetti.jpg"
-)
+youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 ```
 
 
-class: center, middle
+```{r clean-data, include = FALSE}
+youtube <- youtube %>%
+  filter(view_count > 1000) %>%
+  mutate(brand = brand,
+         brand = case_when(
+           brand %in% ("Hynudai") ~ "Hyundai",
+           TRUE ~ brand),
+         ad_popularity = like_count/view_count,
+         brand_type = case_when(
+           brand %in% c("Hyundai", "Kia", "Toyota") ~ "Cars",
+           brand %in% c("Budweiser", "Bud Light") ~ "Beer",
+           brand %in% c("Coca-Cola", "Pepsi", "Doritos") ~ "Junk Food",
+           brand %in% ("E-Trade") ~ "E-Trade",
+           brand %in% ("NFL") ~ "NFL"),
+         official = if_else(channel_title %in% c("Bud Light",
+                                  "Budweiser",
+                                  "CBS",
+                                  "Coca-Cola",
+                                  "GameofThrones",
+                                  "Hyundai Chile",
+                                  "Kia Delray",
+                                  "KIA OMAN",
+                                  "NFL",
+                                  "USA TODAY",
+                                  "USA TODAY SPORTS",
+                                  "Wall Street Journal",
+                                  "World Hyundai Matteson",
+                                  "Alpha SQUAD official",
+                                  "Hyundai Omsk Official",
+                                  "CBS"), "Official", "Unofficial"))
 
-## A statement of the overall goal / research question
+```
+
+## Why is the Super Bowl such a big deal for brands?
+
+.pull-left[
+* The 2021 edition of the Super Bowl, which saw the Tampa Bay Buccaneers emerge victorious against the Kansas City Chiefs was watched by 91.63 million viewers in the United States
+
+
+* Clear that the Super Bowl has an extremely high viewership, ads that air reach a huge number of people and is thus an opportunity for brands to build reputation and revenue
+
+
+* Brands heavily invest into their ads because there is evidence that supports the fact that more viewership leads to more consumption of the branded product. They use their ads to build complementary relationship between the brand and sports viewership more broadly.
+
+]
+
+.pull-right[
+```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
+
+knitr::include_graphics("img/superbowl.png")
+
+```
+]
+---
+
+## A little about our data
+
+.pull-left[
+* We used Superbowl ad data from the past 20 years to analyze trends in ad popularity and production. 
+
+
+* The data comes from FiveThirtyEight, who published a corresponding article "According to Superbowl Ads, Americans Love America, Animals and Sex" in February, 2021. 
+
+
+* The data was collected by watching and evaluating 233 ads on Youtube from the 10 brands that aired the most in the last 21 Super Bowls (according to Superbowl-ads.com) using seven criteria. 
+]
+
+.pull-right[
+```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='left'}
+
+knitr::include_graphics("img/tinytuesday.png")
+
+```
+]
+---
+
+## How does Youtube video engagement inform ad popularity?
+
+.pull-left[
+* Can we predict what will make a Super Bowl ad published on Youtube more popular than another?
+
+* How can we measure ad popularity from our dataset?
+]
+
 
 ---
 
-class: inverse, center, middle
+## Likes vs. Views
 
-# Section title
+* Outlier video is at link: https://www.youtube.com/watch?v=TG4giyL-4Sk
+
+```{r likes-vs-views, echo = FALSE, message=FALSE, out.width = "70%"}
+youtube %>%
+  filter(like_count < 10000) %>%
+  ggplot(aes(x = view_count, y = like_count)) +
+  geom_jitter() +
+  labs(x = "Number of Views",
+       y = "Number of Likes",
+       title = "Number of Views vs. Number of Likes") +
+  geom_smooth(method = "lm", se = FALSE, color = "orange")
+
+likes_views_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(like_count ~ view_count, data = youtube)
+
+```
+
 
 ---
 
-# Hello World
+## How can we define an ad popularity metric?
 
-- Click the `Knit` button to compile your presentation
-
-- Make sure to commit and push all resulting files to your GitHub repo
-
----
-
-class: inverse, middle, center
-
-# Using xaringan
-
----
-
-# xaringan
-
-- The presentation is created using the `xaringan` package
-
-- Use `---` to separate slides and `--` for incremental builds
+* To avoid comparing raw view or like counts across Youtube videos of Super Bowl ads, we decided to define an ad popularity variable likes/view
 
 --
 
-- Like this
+* According to this metric, which video do you think is more "popular"?
+
+---
+
+## Advertisement 1:
+
+<iframe width="1100" height="515" src="https://www.youtube.com/embed/YQo0TfuueaY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+## Advertisement 2:
+
+<iframe width="1100" height="515" src="https://www.youtube.com/embed/w_ZEGUX4YnI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+## How do ad categories influence an ad's popularity?
+
+* Outlier video is at link: https://www.youtube.com/watch?v=mjN3OY9Eefk
+
+
+.pull-center[
+
+``` {r violin-plot-funny, echo = FALSE, message = FALSE, warning = FALSE, out.width = "70%"}
+youtube %>%
+  filter(title != "Frank the Monkey Bud Light") %>%
+  ggplot(mapping = aes(x = funny, 
+                       y = ad_popularity)) +
+  geom_violin() + 
+  labs(title = "Ad Popularity of Funny and Not Funny Ads",
+       x = "Funny Ad Category",
+       y = "Ad Popularity")
+```
+]
+
+---
+
+## How do ad categories influence an ad's popularity?
+ 
+* Outlier video is at link: https://www.youtube.com/watch?v=mjN3OY9Eefk
+
+
+.pull-center[
+
+``` {r violin-plot-patriotic, echo = FALSE, warning = FALSE, out.width="70%", fig.align = 'center', echo=FALSE}
+
+youtube %>%
+  filter(title != "Frank the Monkey Bud Light") %>%
+  ggplot(mapping = aes(x = patriotic, 
+                       y = ad_popularity)) +
+ geom_violin() + 
+  labs(title = "Ad Popularity of Patriotic and Non-Patriotic Ads",
+       x = "Patriotic Ad Category",
+       y = "Ad Popularity")
+```
+]
+
+---
+
+## How do different brands influence an ad's popularity?
+
+*Here 
+
+```{r popularity-by-brand, echo = FALSE, message=FALSE, out.width = "70%"}
+youtube %>%
+  mutate(likes_per_view = youtube$like_count/youtube$view_count) %>%
+  ggplot(aes(x = year, y = likes_per_view, color = brand)) +
+  geom_violin() +
+  facet_wrap(~brand, ncol = 5) +
+  labs(x = "Year",
+       y = "Ad Popularity (Likes per View)",
+       title = "The Popularity of Superbowl Ad Youtube Videos by Brand")
+```
+---
+---
+
+## How has ad production changed over time by brand?
+
+* Here
+
+```{r brand-streamgraph, echo = FALSE}
+brand_counts <- youtube %>%
+  group_by(year) %>%
+  summarise("Toyota" = sum(brand == "Toyota", na.rm = TRUE),
+            "Doritos" = sum(brand == "Doritos", na.rm = TRUE), 
+            "E-Trade" = sum(brand == "E-Trade", na.rm = TRUE),
+            "Budweiser" = sum(brand == "Budweiser", na.rm = TRUE),
+            "Bud Light" = sum(brand == "Bud Light", na.rm = TRUE),
+            "Pepsi" = sum(brand == "Pepsi", na.rm = TRUE),
+            "Coca Cola" = sum(brand == "Coca-Cola", na.rm = TRUE),
+            "Hyundai" = sum(brand == "Hyundai", na.rm = TRUE),
+            "Kia" = sum(brand == "Kia", na.rm = TRUE),
+            "NFL" = sum(brand == "NFL", na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type") 
+
+brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+brand_ad_production 
+```
+
+---
+
+## How has ad production changed over time by ad category?
+
+What context can inform the use of specific ad categories over time?
+
+
+```{r category-streamgraph, echo = FALSE}
+ad_counts <- youtube %>%
+  group_by(year) %>%
+  summarise("Funny" = sum(funny, na.rm = TRUE),
+            "Show Product Quickly" = sum(show_product_quickly, na.rm = TRUE), 
+            "Patriotic" = sum(patriotic, na.rm = TRUE),
+            "Celebrity" = sum(celebrity, na.rm = TRUE),
+            "Danger" = sum(danger, na.rm = TRUE),
+            "Animals" = sum(animals, na.rm = TRUE),
+            "Use Sex" = sum(use_sex, na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type")
+
+pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+pp
+```
+
+---
+
+#What context can inform the use of specific ad categories over time?
+
+
+  * Presidential Elections
+  
+--
+
+  * Social/Political movements
+  
+---
+
+## Is it worth it for brands to post their ads on their official Youtube channels?
+
+```{r channel-type-bar-plot, echo= FALSE}
+youtube %>%
+  group_by(official) %>%
+  summarise(avg_ad_popularity = mean(ad_popularity, na.rm = TRUE)) %>%
+  ggplot(aes(x = official, y = avg_ad_popularity, fill = official)) +
+  geom_col() +
+  scale_fill_manual(values=c("#0000FF", "#FFFF00")) +
+  labs(title = "Average Ad Popularity by Channel Type",
+       x = "Channel Type",
+       y = "Average Ad Popularity",
+       fill = "Channel Type") 
+```
+
+---
+
+## Limitations of the Dataset
+
+* categories are evaluated as T/F without a scale of "funniness" 
+
+* Youtube videos vs. real responses to ads aired during Super Bowl, disconnect between what's popular during the Super Bowl and who goes to watch videos on Youtube 
+
+
+---
+
+## Suggested next steps
+
+* Propose better category to gauge ad popularity (music, emotion, brand popularity, a/b list celebrity) 
+
+* Data driven by survey rather than Youtube engagement to accurately estimate ad popularity in real time rather than those who choose to view Youtube ads from the Super Bowl after the fact
 
 ---
 

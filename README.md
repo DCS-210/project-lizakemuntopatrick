@@ -1,6 +1,6 @@
-Project title
+Lessons to be Learned from Super Bowl Advertisements
 ================
-by Team name
+by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 
 ## Summary
 
@@ -22,9 +22,16 @@ make is about the code itself. Your results with proper output and
 graphics go in your presentation, this space is for a brief summary of
 your project.
 
+Notes: 
+- Goal of the analysis 
+- Analyses we performed
+- Results we got
+- Suggested next steps and critique of the data collection
+
 ## Presentation
 
 Our presentation can be found [here](presentation/presentation.html).
+Our proposal can be found [here](proposal/proposal.html).
 
 ## Data
 
