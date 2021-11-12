@@ -22,6 +22,12 @@ make is about the code itself. Your results with proper output and
 graphics go in your presentation, this space is for a brief summary of
 your project.
 
+Notes: 
+- Goal of the analysis 
+- Analyses we performed
+- Results we got
+- Suggested next steps and critique of the data collection
+
 ## Presentation
 
 Our presentation can be found [here](presentation/presentation.html).
