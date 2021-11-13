@@ -272,6 +272,12 @@ youtube %>%
 ---
 
 ## How do ad categories influence an ad's popularity?
+
+* Insert heat map!
+
+---
+
+## How do ad categories influence an ad's popularity?
  
 .pull-center[
 
@@ -407,4 +413,3 @@ knitr::include_graphics("img/football.jpeg")
 than those who choose to view Youtube ads.
 ]
 
----
