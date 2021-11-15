@@ -6,6 +6,7 @@ institute: "Bates College"
 date: '17 November, 2021'
 output:
   xaringan::moon_reader:
+    fig_caption: false
     seal: false
     css: xaringan-themer.css
     lib_dir: libs
@@ -113,7 +114,7 @@ knitr::include_graphics("img/superbowl.png")
 ]
 
 .pull-right[
-```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
+```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right', fig.cap = "Description/Citation"}
 
 knitr::include_graphics("img/superbowl.png")
 
@@ -203,16 +204,27 @@ knitr::include_graphics("img/tinytuesday.png")
 
 ## What kinds of brands are airing the most during the Super Bowl?
 
-* Pie chart of brand types 
-
 .pull-left[
-```{r, echo=FALSE, out.width = "80%", fig.align='center', warning = FALSE}
+```{r, echo=FALSE, fig.width = 5, fig.align='left', warning = FALSE}
 ad_brand <- youtube %>%
             group_by(brand_type) %>%
             summarise(ad_count = n()) %>%
             mutate(prop_ad = ad_count/sum(ad_count))
 
-pie(ad_brand$prop_ad, border="white", labels = c("Beer","Cars","E-Trade","Junk Food","NFL"))
+ggplot(ad_brand, aes(x="", y=prop_ad, fill=brand_type)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  labs(x = NULL, y = NULL) +
+  theme_classic() +
+  theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) +
+  scale_fill_brewer(palette="Reds") + 
+  labs(fill = "Brand Type")
+
+
+#pie(ad_brand$prop_ad, border="white", labels = c("Beer","Cars","E-Trade","Junk Food","NFL"), radius = 1) 
+
 ```
 ]
 
@@ -274,13 +286,13 @@ likes_views_fit <- linear_reg() %>%
 
 ## Advertisement 1:
 
-<iframe width="1100" height="515" src="https://www.youtube.com/embed/YQo0TfuueaY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1100" height="515" src="https://www.youtube.com/embed/KUoD-gPDahw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 
 ## Advertisement 2:
 
-<iframe width="1100" height="515" src="https://www.youtube.com/embed/w_ZEGUX4YnI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1100" height="515" src="https://www.youtube.com/embed/pVxmT2x3Od4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 
@@ -402,7 +414,8 @@ ad_counts <- youtube %>%
             "Use Sex" = sum(use_sex, na.rm = TRUE)) %>%
   pivot_longer(cols = -year, values_to = "count", names_to = "type")
 
-pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px") %>%
+sg_annotate(x = 2017, y = 20, label = "Here")
 pp
 ```
 
