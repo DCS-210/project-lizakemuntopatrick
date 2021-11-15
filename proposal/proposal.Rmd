@@ -12,6 +12,7 @@ library(streamgraph) # to install stream graph run the below
 #devtools::install_github("hrbrmstr/streamgraph")
 library(ggstream)
 library(ggplot2)
+library(RColorBrewer)
 ```
 
 ## 1. Introduction
@@ -211,6 +212,8 @@ brand_counts <- youtube %>%
 
 brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
 brand_ad_production 
+
+
 ```
 
 
@@ -308,8 +311,55 @@ youtube %>%
      title = "The Popularity of Ads which show animals")
 ```
 
-```{r}
+```{r clean-data, include = FALSE}
+youtube <- youtube %>%
+  filter(view_count > 1000) %>%
+  mutate(brand = brand,
+         brand = case_when(
+           brand %in% ("Hynudai") ~ "Hyundai",
+           TRUE ~ brand),
+         ad_popularity = like_count/view_count,
+         brand_type = case_when(
+           brand %in% c("Hyundai", "Kia", "Toyota") ~ "Cars",
+           brand %in% c("Budweiser", "Bud Light") ~ "Beer",
+           brand %in% c("Coca-Cola", "Pepsi", "Doritos") ~ "Junk Food",
+           brand %in% ("E-Trade") ~ "E-Trade",
+           brand %in% ("NFL") ~ "NFL"),
+         official = if_else(channel_title %in% c("Bud Light",
+                                  "Budweiser",
+                                  "CBS",
+                                  "Coca-Cola",
+                                  "GameofThrones",
+                                  "Hyundai Chile",
+                                  "Kia Delray",
+                                  "KIA OMAN",
+                                  "NFL",
+                                  "USA TODAY",
+                                  "USA TODAY SPORTS",
+                                  "Wall Street Journal",
+                                  "World Hyundai Matteson",
+                                  "Alpha SQUAD official",
+                                  "Hyundai Omsk Official",
+                                  "CBS"), "Official", "Unofficial"))
+```
 
+```{r}
+ad_brand <- youtube %>%
+            group_by(brand_type) %>%
+            summarise(ad_count = n()) %>%
+            mutate(prop_ad = ad_count/sum(ad_count))
+
+pie(ad_brand$prop_ad, border="white", labels = c("Beer","Cars","E-Trade","Junk Food","NFL"))
+
+```
+
+ad_brand <- youtube %>%
+            group_by(brand_type) %>%
+            summarise(ad_count = n()) %>%
+            mutate(prop_ad = ad_count/sum(ad_count))
+
+pie(ad_brand$prop_ad, border="white")
+```
 ```
 
 
