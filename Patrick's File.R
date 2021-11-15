@@ -78,7 +78,25 @@ youtube %>%
   heatmaply(col=mycols, breaks=bk, scale="none", xlab="Type of Ad", ylab="Combination", main="Heatmap for Ad Combinations")
 
 
-
+bk <- c(-5,seq(45,200,by=30))
+#colors (one less than breaks
+mycols <- c("blue",colorRampPalette(colors = c("white","red"))(length(bk)-2))
+youtube %>% 
+  select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
+  
+  mutate(patriotic = ifelse(patriotic == FALSE, "False", "Patriotic"),
+         animals = ifelse(animals == FALSE, "False", "Has animals"),
+         funny = ifelse(funny == FALSE, "False", "Is funny"),
+         celebrity = ifelse(celebrity == FALSE, "False", "Has a celebrity"),
+         danger = ifelse(danger == FALSE, "False", "Has danger"),
+         use_sex = ifelse(use_sex == FALSE, "False", "Uses sex"),
+         show_product_quickly = ifelse(show_product_quickly == FALSE, "False", "Shows the product quickly"),
+  ) %>%
+  pivot_longer(cols = -id, values_to = "content", names_to = "type") %>%
+  filter(content != "False") %>%
+  xtabs(~id + content, data = ., sparse = FALSE) %>% 
+  crossprod(., .)  %>%
+  heatmaply(col=mycols, breaks=bk, scale="none", xlab="Type of Ad", ylab="Combination", main="Heatmap for Ad Combinations")
 
 
 
