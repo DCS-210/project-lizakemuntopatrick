@@ -284,27 +284,9 @@ likes_views_fit <- linear_reg() %>%
 
 ---
 
-## How do ad categories influence an ad's popularity?
+## What is the most popular combination of ad categories?
 
-.pull-center[
-
-``` {r violin-plot-funny, echo = FALSE, message = FALSE, warning = FALSE, out.width = "70%", fig.align = 'center'}
-youtube %>%
-  filter(title != "Frank the Monkey Bud Light") %>%
-  ggplot(mapping = aes(x = funny, 
-                       y = ad_popularity)) +
-  geom_violin() + 
-  labs(title = "Ad Popularity of Funny Vs. Not Funny Ads",
-       x = "Funny Ad Category",
-       y = "Ad Popularity")
-```
-]
-
----
-
-## How do ad categories influence an ad's popularity?
-
-```{r}
+```{r, echo = FALSE, warning = FALSE, fig.align = 'center', out.height= 565, out.width = 900}
 bk <- c(-5,seq(45,200,by=30))
 #colors (one less than breaks
 mycols <- c("blue",colorRampPalette(colors = c("white","red"))(length(bk)-2))
@@ -326,6 +308,23 @@ youtube %>%
   heatmaply(col=mycols, breaks=bk, scale="none", xlab="Type of Ad", ylab="Combination", main="Heatmap for Ad Combinations")
 ```
 
+---
+
+## How do ad categories influence an ad's popularity?
+
+.pull-center[
+
+``` {r violin-plot-funny, echo = FALSE, message = FALSE, warning = FALSE, out.width = "70%", fig.align = 'center'}
+youtube %>%
+  filter(title != "Frank the Monkey Bud Light") %>%
+  ggplot(mapping = aes(x = funny, 
+                       y = ad_popularity)) +
+  geom_violin() + 
+  labs(title = "Ad Popularity of Funny Vs. Not Funny Ads",
+       x = "Funny Ad Category",
+       y = "Ad Popularity")
+```
+]
 
 ---
 
