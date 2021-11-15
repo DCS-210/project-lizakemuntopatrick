@@ -43,6 +43,7 @@ heatmap(data)
 #Neeed to get them to interact*
 #Maybe add Case When?
 
+#CODE TO FIND MOST POPULAR COMBOS
 
 youtube %>% 
   mutate(type = as.factor(str_c(patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly))) %>%
@@ -52,52 +53,11 @@ youtube %>%
   rename(Funny_and_Show_Product_Quickly = FALSEFALSETRUEFALSEFALSEFALSETRUE)
   
 
-
-youtube %>% 
-  select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
-  
-  mutate(patriotic = ifelse(patriotic == FALSE, "False", "Patriotic"),
-         animals = ifelse(animals == FALSE, "False", "animals"),
-         funny = ifelse(funny == FALSE, "False", "funny"),
-         celebrity = ifelse(celebrity == FALSE, "False", "celebrity"),
-         danger = ifelse(danger == FALSE, "False", "danger"),
-         use_sex = ifelse(use_sex == FALSE, "False", "use_sex"),
-         show_product_quickly = ifelse(show_product_quickly == FALSE, "False", "show_product_quickly"),
-         ) %>%
-    pivot_longer(cols = -id, values_to = "content", names_to = "type") %>%
-    filter(content != "False") %>%
-    xtabs(~id + content, data = ., sparse = FALSE) %>% 
-    crossprod(., .)  %>%
-    heatmap()
-
-%>%
-  
-  count(logical, type) 
-
-%>%
-  spread(type, logical, fill=0, drop=FALSE)
-  
-  
-youtube %>% 
-  select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
-  mutate(patriotic = ifelse(patriotic == FALSE, "Not Patriotic", "Patriotic"),
-         animals = ifelse(animals == FALSE, "Not animals", "animals"),
-         funny = ifelse(funny == FALSE, "Not funny", "funny"),
-         celebrity = ifelse(celebrity == FALSE, "Not celebrity", "celebrity"),
-         danger = ifelse(danger == FALSE, "Not danger", "danger"),
-         use_sex = ifelse(use_sex == FALSE, "Not use_sex", "use_sex"),
-         show_product_quickly = ifelse(show_product_quickly == FALSE, "Not show_product_quickly", "show_product_quickly"),
-  ) %>%
-  pivot_longer(cols = -id, values_to = "content", names_to = "type") %>%
-  xtabs(~id + content, data = ., sparse = FALSE) %>% 
-  crossprod(., .)  %>%
-  heatmap()
-
-
+#CODE FOR THE HEAT MAP
 install.packages('heatmaply')
 library(heatmaply)
 
-bk <- c(-5,seq(45,200,by=20))
+bk <- c(-5,seq(45,200,by=30))
 #colors (one less than breaks
 mycols <- c("blue",colorRampPalette(colors = c("white","red"))(length(bk)-2))
 youtube %>% 
@@ -115,46 +75,10 @@ youtube %>%
   filter(content != "False") %>%
   xtabs(~id + content, data = ., sparse = FALSE) %>% 
   crossprod(., .)  %>%
-  heatmaply(col=mycols, breaks=bk, scale="none", xlab="Variable", ylab="Observation", main="heatmap")
+  heatmaply(col=mycols, breaks=bk, scale="none", xlab="Type of Ad", ylab="Combination", main="Heatmap for Ad Combinations")
 
 
 
 
 
 
-
-
-#breaks
-bk <- c(0,seq(0,247,by=1))
-#colors (one less than breaks
-mycols <- c("red",colorRampPalette(colors = c("blue","white"))(length(bk)-2))
-youtube %>%
-  select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
-  mutate(patriotic = ifelse(patriotic == FALSE, "False", "Patriotic"),
-         animals = ifelse(animals == FALSE, "False", "animals"),
-         funny = ifelse(funny == FALSE, "False", "funny"),
-         celebrity = ifelse(celebrity == FALSE, "False", "celebrity"),
-         danger = ifelse(danger == FALSE, "False", "danger"),
-         use_sex = ifelse(use_sex == FALSE, "False", "use_sex"),
-         show_product_quickly = ifelse(show_product_quickly == FALSE, "False", "show_product_quickly"),
-  ) %>%
-  pivot_longer(cols = -id, values_to = "content", names_to = "type") %>%
-  filter(content != "False") %>%
-  xtabs(~id + content, data = ., sparse = FALSE) %>% 
-  crossprod(., .)  %>%
-  heatmap(dendrogram = "none",
-               xlab = "", ylab = "", 
-               main = "",
-               scale = "column",
-               margins = c(60,100,40,20),
-               grid_color = "white",
-               grid_width = 0.00001,
-               titleX = FALSE,
-               hide_colorbar = TRUE,
-               branches_lwd = 0.1,
-               label_names = c("Country", "Feature:", "Value"),
-               fontsize_row = 5, fontsize_col = 5,
-               labCol = colnames(mat),
-               labRow = rownames(mat),
-               heatmap_layers = theme(axis.line=element_blank())
-)
