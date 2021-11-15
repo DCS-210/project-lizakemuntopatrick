@@ -3,9 +3,10 @@ title: "Lessons to be Learned from Super Bowl Advertisements"
 subtitle: ""
 author: "Liza Dubinsky, Kemunto Ongera, Patrick Bergin"
 institute: "Bates College"
-date: '11 November, 2021'
+date: '17 November, 2021'
 output:
   xaringan::moon_reader:
+    seal: false
     css: xaringan-themer.css
     lib_dir: libs
     nature:
@@ -13,6 +14,19 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+params:
+  background_img: "img/background2.jpg"
+    
+---
+
+class: title-slide center middle
+background-image: url(`r params$background_img`)
+background-size: cover
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$author`
+## `r rmarkdown::metadata$institute`
+### `r rmarkdown::metadata$date`
 ---
 
 
@@ -190,8 +204,8 @@ knitr::include_graphics("img/tinytuesday.png")
 
 * Pie chart of brand types 
 
-.pull-center[
-```{r}
+.pull-left[
+```{r, echo=FALSE, out.width = "80%", fig.align='center', warning = FALSE}
 ad_brand <- youtube %>%
             group_by(brand_type) %>%
             summarise(ad_count = n()) %>%
@@ -201,9 +215,12 @@ pie(ad_brand$prop_ad, border="white", labels = c("Beer","Cars","E-Trade","Junk F
 ```
 ]
 
+.pull-right[
+
 * What does this say about who ads are catering to? 
 
 * According to surveys conducted by Statista, there is a 47% likelihood for males to watch the Superbowl and 28% likelihood for females. In addition to this the target audience is largely made up of the 18-49 age demographic. 
+]
 
 ---
 
