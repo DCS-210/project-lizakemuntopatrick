@@ -320,13 +320,13 @@ likes_views_fit <- linear_reg() %>%
 
 ---
 
-## What is the most popular combination of ad categories?
+## What is the Most Popular Combination of Ad Categories?
 
-```{r, echo = FALSE, warning = FALSE, fig.align = 'center', out.height= 565, out.width = 900}
+```{r echo=FALSE, warning=FALSE, out.width=5}
 bk <- c(-5,seq(45,200,by=30))
 #colors (one less than breaks
 mycols <- c("blue",colorRampPalette(colors = c("white","red"))(length(bk)-2))
-youtube %>% 
+heatmap <- youtube %>% 
   select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
   
   mutate(patriotic = ifelse(patriotic == FALSE, "False", "Patriotic"),
@@ -342,11 +342,15 @@ youtube %>%
   xtabs(~id + content, data = ., sparse = FALSE) %>% 
   crossprod(., .)  %>%
   heatmaply(col=mycols, breaks=bk, scale="none", xlab="Type of Ad", ylab="Combination", main="Heatmap for Ad Combinations")
+
+htmlwidgets::saveWidget(heatmap, paste0(".html"))
+
 ```
+<iframe width="1100" height="515" src="https://dcs-210.github.io/project-lizakemuntopatrick/presentation/heatmap.html" frameborder="0"></iframe>
 
 ---
 
-## How do ad categories influence an ad's popularity?
+## How Do Ad Categories Influence an Ad's Popularity?
 
 .pull-center[
 
@@ -364,7 +368,7 @@ youtube %>%
 
 ---
 
-## How has ad production changed over time by ad category?
+## How Has Ad Production Changed Over Time by Ad Category?
 
 
 ```{r category-streamgraph, echo = FALSE, warning = FALSE, fig.align= 'center'}
@@ -386,7 +390,7 @@ pp
 
 ---
 
-## Is it worth it for brands to post their ads on their official Youtube channels?
+## Is it Worth it for Brands to Post Their Ads on Their Official Youtube Channels?
 
 ```{r channel-type-bar-plot, echo= FALSE, fig.align= 'center', out.width= "70%"}
 youtube %>%
@@ -414,7 +418,7 @@ disconnect between what's popular during the Super Bowl and who goes to watch vi
 
 ---
 
-## Suggested next steps
+## Suggested Next Steps
 
 .pull-left[
 ```{r, echo=FALSE, out.height= 350, out.width = 650, fig.align='left'}
