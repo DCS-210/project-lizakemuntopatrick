@@ -237,6 +237,30 @@ ggplot(ad_brand, aes(x="", y=prop_ad, fill=brand_type)) +
 
 ---
 
+## How has ad production changed over time by brand?
+
+
+```{r brand-streamgraph, echo = FALSE, warning = FALSE, fig.align= 'center'}
+brand_counts <- youtube %>%
+  group_by(year) %>%
+  summarise("Toyota" = sum(brand == "Toyota", na.rm = TRUE),
+            "Doritos" = sum(brand == "Doritos", na.rm = TRUE), 
+            "E-Trade" = sum(brand == "E-Trade", na.rm = TRUE),
+            "Budweiser" = sum(brand == "Budweiser", na.rm = TRUE),
+            "Bud Light" = sum(brand == "Bud Light", na.rm = TRUE),
+            "Pepsi" = sum(brand == "Pepsi", na.rm = TRUE),
+            "Coca Cola" = sum(brand == "Coca-Cola", na.rm = TRUE),
+            "Hyundai" = sum(brand == "Hyundai", na.rm = TRUE),
+            "Kia" = sum(brand == "Kia", na.rm = TRUE),
+            "NFL" = sum(brand == "NFL", na.rm = TRUE)) %>%
+  pivot_longer(cols = -year, values_to = "count", names_to = "type") 
+
+brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+brand_ad_production 
+```
+
+---
+
 ## How do Youtube video characteristics inform ad popularity?
 
 .pull-left[
@@ -340,65 +364,6 @@ youtube %>%
 
 ---
 
-## How do ad categories influence an ad's popularity?
- 
-.pull-center[
-
-``` {r violin-plot-patriotic, echo = FALSE, warning = FALSE, out.width="70%", fig.align = 'center', echo=FALSE}
-
-youtube %>%
-  filter(title != "Frank the Monkey Bud Light") %>%
-  ggplot(mapping = aes(x = patriotic, 
-                       y = ad_popularity)) +
- geom_violin() + 
-  labs(title = "Ad Popularity of Patriotic Vs. Non-Patriotic Ads",
-       x = "Patriotic Ad Category",
-       y = "Ad Popularity")
-```
-]
-
----
-
-## How do different brands influence an ad's popularity?
-
-```{r popularity-by-brand, echo = FALSE, message=FALSE, out.width = "70%", fig.align = 'center', warning = FALSE}
-youtube %>%
-  mutate(likes_per_view = youtube$like_count/youtube$view_count) %>%
-  ggplot(aes(x = year, y = likes_per_view, color = brand)) +
-  geom_violin() +
-  theme(legend.position = "none") +
-  facet_wrap(~brand, ncol = 5) +
-  labs(x = "Year",
-       y = "Ad Popularity (Likes per View)",
-       title = "The Popularity of Superbowl Ad Youtube Videos by Brand")
-```
-
----
-
-## How has ad production changed over time by brand?
-
-
-```{r brand-streamgraph, echo = FALSE, warning = FALSE, fig.align= 'center'}
-brand_counts <- youtube %>%
-  group_by(year) %>%
-  summarise("Toyota" = sum(brand == "Toyota", na.rm = TRUE),
-            "Doritos" = sum(brand == "Doritos", na.rm = TRUE), 
-            "E-Trade" = sum(brand == "E-Trade", na.rm = TRUE),
-            "Budweiser" = sum(brand == "Budweiser", na.rm = TRUE),
-            "Bud Light" = sum(brand == "Bud Light", na.rm = TRUE),
-            "Pepsi" = sum(brand == "Pepsi", na.rm = TRUE),
-            "Coca Cola" = sum(brand == "Coca-Cola", na.rm = TRUE),
-            "Hyundai" = sum(brand == "Hyundai", na.rm = TRUE),
-            "Kia" = sum(brand == "Kia", na.rm = TRUE),
-            "NFL" = sum(brand == "NFL", na.rm = TRUE)) %>%
-  pivot_longer(cols = -year, values_to = "count", names_to = "type") 
-
-brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
-brand_ad_production 
-```
-
----
-
 ## How has ad production changed over time by ad category?
 
 
@@ -419,17 +384,6 @@ sg_annotate(x = 2017, y = 20, label = "Here")
 pp
 ```
 
----
-
-#What context can inform the trends in ad production?
-
-
-  * Presidential Elections (2008, 2016, 2020)
-  
---
-
-  * Social/Political movements (Me Too Movement in 2017)
-  
 ---
 
 ## Is it worth it for brands to post their ads on their official Youtube channels?
