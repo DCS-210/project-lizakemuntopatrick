@@ -204,13 +204,12 @@ knitr::include_graphics("img/tinytuesday.png")
 
 ## What kinds of brands are airing the most during the Super Bowl?
 
-.pull-left[
-```{r, echo=FALSE, fig.width = 5, fig.align='left', warning = FALSE}
+.pull-center[
+```{r, echo = FALSE, warning = FALSE, out.width="70%", fig.align = 'center', echo=FALSE}
 ad_brand <- youtube %>%
             group_by(brand_type) %>%
             summarise(ad_count = n()) %>%
             mutate(prop_ad = ad_count/sum(ad_count))
-
 ggplot(ad_brand, aes(x="", y=prop_ad, fill=brand_type)) +
   geom_bar(stat="identity", width=1) +
   coord_polar("y", start=0) +
@@ -228,12 +227,7 @@ ggplot(ad_brand, aes(x="", y=prop_ad, fill=brand_type)) +
 ```
 ]
 
-.pull-right[
 
-* What does this say about who ads are catering to? 
-
-* According to surveys conducted by Statista, there is a 47% likelihood for males to watch the Superbowl and 28% likelihood for females. In addition to this the target audience is largely made up of the 18-49 age demographic. 
-]
 
 ---
 

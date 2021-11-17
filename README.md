@@ -32,6 +32,7 @@ Notes:
 
 Our presentation can be found [here](presentation/presentation.html).
 Our proposal can be found [here](proposal/proposal.html).
+Our heatmap can be found [here](presentation/heatmap.html).
 
 ## Data
 
