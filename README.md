@@ -4,6 +4,17 @@ by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 
 ## Summary
 
+Where is our data from:
+
+Our questions:
+
+Our methods:
+
+Our findings:
+
+Suggestions:
+
+
 Write-up of your project and findings go here. Think of this as the text
 of your presentation. The length should be roughly 5 minutes when read
 out loud. Although pacing varies, a 5-minute speech is roughly 750
