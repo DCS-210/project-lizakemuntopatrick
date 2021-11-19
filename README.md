@@ -1,4 +1,5 @@
 Lessons to be Learned from Super Bowl Advertisements
+================
 by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 
 ## Summary
