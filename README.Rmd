@@ -1,5 +1,5 @@
 ---
-title: Project title
+title: Lessons to be Learned from Super Bowl Advertisements
 author: by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 output: github_document
 ---
