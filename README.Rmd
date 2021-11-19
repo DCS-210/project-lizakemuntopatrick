@@ -1,5 +1,5 @@
 ---
-title: Project title
+title: Lessons to be Learned from Super Bowl Advertisements
 author: by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 output: github_document
 ---
@@ -42,4 +42,3 @@ Mock, Thomas. “Superbowl commercials”. R for Data Science Online Learning Co
 [Image 3](https://www.gamblingsites.org/blog/super-bowl-53-odds-will-win-next-year/)
 
 [Image 4](https://www.gamblerspick.com/news/industry/the-nfl-scores-a-hat-trick-with-caesars-draftkings-and-fanduel-r1706/)
-
