@@ -32,7 +32,6 @@ background-size: cover
 
 
 ```{r load-packages, include = FALSE}
-# Add any additional packages you need to this chunk
 library(tidyverse)
 library(tidymodels)
 library(palmerpenguins)
@@ -42,12 +41,12 @@ library(streamgraph)
 library(heatmaply)
 ```
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 # For better figure resolution
 knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "100%")
 ```
 
-```{r load-data, include=FALSE}
+```{r load-data, include = FALSE}
 youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
 ```
 
@@ -82,29 +81,23 @@ youtube <- youtube %>%
                                   "Alpha SQUAD official",
                                   "Hyundai Omsk Official",
                                   "CBS"), "Official", "Unofficial"))
-
 ```
 
 ### Why is the Super Bowl Such a Big Deal for Brands?
 
 .pull-left[
 * The 2021 Super Bowl was watched by 91.63 million viewers in the United States.
-
 ]
 
 .pull-right[
-```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
-
+```{r super-bowl-trophy, echo = FALSE, out.height = 400, out.width = 300, fig.align = 'right'}
 knitr::include_graphics("img/superbowl.png")
-
 ```
 ]
 
 .footnote[
-
 ###### Background Image: Caesars Superdome in New Orleans, Louisiana.
 ###### Image: Vince Lombardi Trophy.
-
 ]
 
 ---
@@ -114,24 +107,17 @@ knitr::include_graphics("img/superbowl.png")
 .pull-left[
 * The 2021 Super Bowl was watched by 91.63 million viewers in the United States.
 
-
 * Brands invest heavily into their ads because evidence shows that more viewership leads to higher consumption of the branded product.
-
-
 ]
 
 .pull-right[
-```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right', fig.cap = "Description/Citation"}
-
+```{r super-bowl-trophy2, echo = FALSE, out.height = 400, out.width = 300, fig.align = 'right'}
 knitr::include_graphics("img/superbowl.png")
-
 ```
 ]
 
 .footnote[
-
 ###### Image: Vince Lombardi Trophy.
-
 ]
 
 ---
@@ -140,26 +126,20 @@ knitr::include_graphics("img/superbowl.png")
 
 .pull-left[
 * The 2021 Super Bowl was watched by 91.63 million viewers in the United States.
-
 
 * Brands invest heavily into their ads because evidence shows that more viewership leads to higher consumption of the branded product.
 
 * These ads build a complementary relationship between the brand and sports viewership.
-
 ]
 
 .pull-right[
-```{r, echo=FALSE, out.height=400, out.width = 300, fig.align='right'}
-
+```{r super-bowl-trophy3, echo = FALSE, out.height = 400, out.width = 300, fig.align = 'right'}
 knitr::include_graphics("img/superbowl.png")
-
 ```
 ]
 
 .footnote[
-
 ###### Image: Vince Lombardi Trophy.
-
 ]
 
 ---
@@ -167,10 +147,8 @@ knitr::include_graphics("img/superbowl.png")
 ### A Little About Our Data
 
 .pull-left[
-```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='left'}
-
+```{r dataset-image, echo = FALSE, out.height = 350, out.width = 350, fig.align = 'left'}
 knitr::include_graphics("img/tinytuesday.png")
-
 ```
 ]
 
@@ -179,9 +157,7 @@ knitr::include_graphics("img/tinytuesday.png")
 ]
 
 .footnote[
-
 ###### Image: TinyTuesday dataset cover art of baby, Cardi B, flying pig, Bud Light knight, etc in rainbow television.
-
 ]
 
 ---
@@ -189,24 +165,19 @@ knitr::include_graphics("img/tinytuesday.png")
 ### A Little About Our Data
 
 .pull-left[
-```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='left'}
-
+```{r dataset-image2, echo = FALSE, out.height = 350, out.width = 350, fig.align = 'left'}
 knitr::include_graphics("img/tinytuesday.png")
-
 ```
 ]
 
 .pull-right[
 * We used Superbowl ad data from the past 20 years to analyze trends in ad popularity and production. 
-
 
 * The data comes from FiveThirtyEight, who published a corresponding article "According to Superbowl Ads, Americans Love America, Animals and Sex" in February, 2021. 
 ]
 
 .footnote[
-
 ###### Image: TinyTuesday dataset cover art of baby, Cardi B, flying pig, Bud Light knight, etc in rainbow television.
-
 ]
 
 ---
@@ -214,27 +185,21 @@ knitr::include_graphics("img/tinytuesday.png")
 ### A Little About Our Data
 
 .pull-left[
-```{r, echo=FALSE, out.height= 350, out.width = 350, fig.align='left'}
-
+```{r dataset-image3, echo = FALSE, out.height = 350, out.width = 350, fig.align = 'left'}
 knitr::include_graphics("img/tinytuesday.png")
-
 ```
 ]
 
 .pull-right[
 * We used Superbowl ad data from the past 20 years to analyze trends in ad popularity and production. 
 
-
 * The data comes from FiveThirtyEight, who published a corresponding article "According to Superbowl Ads, Americans Love America, Animals and Sex" in February, 2021. 
-
 
 * The data was collected by watching and evaluating 233 ads on Youtube from the 10 brands that aired the most in the last 21 Super Bowls. 
 ]
 
 .footnote[
-
 ###### Image: TinyTuesday dataset cover art of baby, Cardi B, flying pig, Bud Light knight, etc in rainbow television.
-
 ]
 
 ---
@@ -242,38 +207,31 @@ knitr::include_graphics("img/tinytuesday.png")
 ### What Kinds of Brands are Airing the Most During the Super Bowl?
 
 .pull-center[
-```{r, echo = FALSE, warning = FALSE, out.width="70%", fig.align = 'center', echo=FALSE}
+```{r pie-chart-brand-types, echo = FALSE, warning = FALSE, out.width="70%", fig.align = 'center', echo=FALSE}
 ad_brand <- youtube %>%
             group_by(brand_type) %>%
             summarise(ad_count = n()) %>%
             mutate(prop_ad = ad_count/sum(ad_count))
-ggplot(ad_brand, aes(x="", y=prop_ad, fill=brand_type)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
+ggplot(ad_brand, aes(x = "", y = prop_ad, fill = brand_type)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
   labs(x = NULL, y = NULL) +
   theme_classic() +
   theme(axis.line = element_blank(),
           axis.text = element_blank(),
           axis.ticks = element_blank()) +
-  scale_fill_brewer(palette="Reds") + 
+  scale_fill_brewer(palette = "Reds") + 
   labs(fill = "Brand Type")
-
-
-#pie(ad_brand$prop_ad, border="white", labels = c("Beer","Cars","E-Trade","Junk Food","NFL"), radius = 1) 
-
 ```
 ]
 
 .footnote[
-
 ###### Figure: Pie chart showing the breakdown of brand types.
-
 ]
 
 ---
 
 ### How has Ad Production Changed Over Time by Brand?
-
 
 ```{r brand-streamgraph, echo = FALSE, warning = FALSE, fig.align= 'center'}
 brand_counts <- youtube %>%
@@ -290,12 +248,11 @@ brand_counts <- youtube %>%
             "NFL" = sum(brand == "NFL", na.rm = TRUE)) %>%
   pivot_longer(cols = -year, values_to = "count", names_to = "type") 
 
-brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height="300px", width="1000px")
+brand_ad_production <- streamgraph(brand_counts, key = "type", value = "count", date = "year", height = "300px", width = "1000px")
 brand_ad_production 
 ```
 
 .footnote[
-
 ###### Figure: Streamgraph of the ad share of each brand for the past 20 Super Bowls.
 ]
 
@@ -310,7 +267,7 @@ brand_ad_production
 ]
 
 .pull-right[
-```{r, echo=FALSE, out.height= 350, out.width = 550, fig.align='left'}
+```{r nfl-logo-trophy-football-image, echo =FALSE, out.height = 350, out.width = 550, fig.align = 'left'}
 
 knitr::include_graphics("img/superbowl2.jpg")
 
@@ -318,16 +275,14 @@ knitr::include_graphics("img/superbowl2.jpg")
 ]
 
 .footnote[
-
 ###### Image: NFL logo, Vince Lombardi Trophy, and football on football stadium background.
-
 ]
 
 ---
 
 ### Finding an Ad Popularity Metric
 
-```{r likes-vs-views, echo = FALSE, message=FALSE, out.width = "65%", fig.align = 'center'}
+```{r likes-vs-views-regression-model, echo = FALSE, message = FALSE, out.width = "65%", fig.align = 'center'}
 youtube %>%
   filter(like_count < 10000) %>%
   ggplot(aes(x = view_count, y = like_count)) +
@@ -340,13 +295,10 @@ youtube %>%
 likes_views_fit <- linear_reg() %>%
   set_engine("lm") %>%
   fit(like_count ~ view_count, data = youtube)
-
 ```
 
 .footnote[
-
 ###### Figure: Regression model to investigate relationship between number of views and number of likes.
-
 ]
 
 ---
@@ -377,10 +329,9 @@ likes_views_fit <- linear_reg() %>%
 
 ### What is the Most Popular Combination of Ad Categories?
 
-```{r echo=FALSE, warning=FALSE, out.width=5}
-bk <- c(-5,seq(45,200,by=30))
-#colors (one less than breaks
-mycols <- c("blue",colorRampPalette(colors = c("white","red"))(length(bk)-2))
+```{r ad-combinations-heatmap, echo = FALSE, warning = FALSE, out.width = 5}
+bk <- c(-5, seq(45, 200, by = 30))
+mycols <- c("blue", colorRampPalette(colors = c("white", "red"))(length(bk)-2))
 heatmap <- youtube %>% 
   select(id, patriotic, animals, funny, celebrity, danger, use_sex, show_product_quickly) %>%
   
@@ -396,7 +347,7 @@ heatmap <- youtube %>%
   filter(content != "False") %>%
   xtabs(~id + content, data = ., sparse = FALSE) %>% 
   crossprod(., .)  %>%
-  heatmaply(col=mycols, breaks=bk, scale="none", xlab="Type of Ad", ylab="Combination", main="Heatmap for Ad Combinations")
+  heatmaply(col = mycols, breaks = bk, scale = "none", xlab = "Type of Ad", ylab = "Combination", main = "Heatmap for Ad Combinations")
 
 htmlwidgets::saveWidget(heatmap, paste0(".html"))
 
@@ -404,9 +355,7 @@ htmlwidgets::saveWidget(heatmap, paste0(".html"))
 <iframe width="1100" height="515" src="https://dcs-210.github.io/project-lizakemuntopatrick/presentation/heatmap.html" frameborder="0"></iframe>
 
 .footnote[
-
 ###### Figure: Heatmap of frequencies of ad category combinations.
-
 ]
 
 ---
@@ -414,7 +363,6 @@ htmlwidgets::saveWidget(heatmap, paste0(".html"))
 ### How Do Ad Categories Influence an Ad's Popularity?
 
 .pull-center[
-
 ``` {r violin-plot-funny, echo = FALSE, message = FALSE, warning = FALSE, out.width = "65%", fig.align = 'center'}
 youtube %>%
   filter(title != "Frank the Monkey Bud Light") %>%
@@ -428,17 +376,14 @@ youtube %>%
 ]
 
 .footnote[
-
 ###### Figure: Violin plot showing the probability density of funny and not funny ads at different ad popularities.
-
 ]
 
 ---
 
 ### How Has Ad Production Changed Over Time by Ad Category?
 
-
-```{r category-streamgraph, echo = FALSE, warning = FALSE, fig.align= 'center'}
+```{r ad-category-streamgraph, echo = FALSE, warning = FALSE, fig.align= 'center'}
 ad_counts <- youtube %>%
   group_by(year) %>%
   summarise("Funny" = sum(funny, na.rm = TRUE),
@@ -450,29 +395,26 @@ ad_counts <- youtube %>%
             "Use Sex" = sum(use_sex, na.rm = TRUE)) %>%
   pivot_longer(cols = -year, values_to = "count", names_to = "type")
 
-pp <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height="300px", width="1000px") %>%
-sg_annotate(x = 2017, y = 20, label = "Here")
-pp
+ad_category_ad_production <- streamgraph(ad_counts, key = "type", value = "count", date = "year", height = "300px", width = "1000px") 
+ad_category_ad_production
 ```
 
 .footnote[
-
 ###### Figure: Streamgraph of the ad share of each ad category for the past 20 Super Bowls.
-
 ]
 
 ---
 
 ### Is it Worth it for Brands to Post Their Ads on Their Official Youtube Channels?
 
-```{r channel-type-bar-plot, echo= FALSE, fig.align= 'center', out.width= "60%"}
+```{r channel-type-bar-plot, echo = FALSE, fig.align = 'center', out.width = "60%"}
 youtube %>%
   group_by(official) %>%
   summarise(avg_ad_popularity = mean(ad_popularity, na.rm = TRUE)) %>%
   ggplot(aes(x = official, y = avg_ad_popularity, fill = official)) +
   geom_col() +
   theme(legend.position = "none") +
-  scale_fill_manual(values=c("#CE2029", "#0055B3")) +
+  scale_fill_manual(values = c("#CE2029", "#0055B3")) +
   labs(title = "Average Ad Popularity by Channel Type",
        x = "Channel Type",
        y = "Average Ad Popularity",
@@ -480,9 +422,7 @@ youtube %>%
 ```
 
 .footnote[
-
 ###### Figure: Bar plot of average ad popularity for official and unofficial Youtube channels.
-
 ]
 
 ---
@@ -500,10 +440,8 @@ disconnect between what's popular during the Super Bowl and who goes to watch vi
 ### Suggested Next Steps
 
 .pull-left[
-```{r, echo=FALSE, out.height= 350, out.width = 650, fig.align='left'}
-
+```{r football-in-stadium-image, echo = FALSE, out.height = 350, out.width = 650, fig.align = 'left'}
 knitr::include_graphics("img/football.jpeg")
-
 ```
 ]
 
@@ -515,7 +453,5 @@ than those who choose to view Youtube ads.
 ]
 
 .footnote[
-
 ###### Image: Football under lights of foodball stadium.
-
 ]

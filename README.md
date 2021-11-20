@@ -4,7 +4,7 @@ by Liza Dubinsky, Kemunto Ongera, Patrick Bergin
 
 ## Summary
 
-\[Topic Background - Patrick\]
+The Super Bowl is continuously one of the most watched events on TV every year. Besides the chance to watch the two best football teams in the world going head to head and the highly-entertaining halftime shows that have featured some of the greatest musical artists of the past 100 years, the commercials during game stoppage is one of the most anticipated events of the Super Bowl. This is for good reason because companies have understood for a long time the potential in marketing for quite literally millions of viewers. Therefore, year after year, companies spend millions of dollars trying to make the best commercial for the Super Bowl.
 
 For this project, we used data from FiveThirtyEight, who published an
 article titled “According to Superbowl Ads, Americans Love America,
@@ -60,7 +60,7 @@ similar result, it led us to the conclusion that there is no one ad
 category that led to a higher ad popularity rank, thereby rejecting our
 hypothesis.
 
-\[Heatmap - Patrick\]
+We were then interested in what the most popular combination of two categories were. To visualize this data, we elected to use an interactive heat-map. Formatting our data to allow us to do so was tricky because we needed to get our data in a matrix with all of the categories as both variables and observations. However through mutation, pivoting and use of the xtab function we were able to accomplish this goal. By using the heatmaply library we made the heatmap interactive, so it was very easy for us to tell the most common combinations were attempting to be funny and showing the product quickly. We finally played with the color scheme to match traditional Super Bowl colors to make the presentation more appealing to the audience.
 
 We were curious to understand our data better and identify which kind of
 brands were airing the most during the Superbowl ads. To do this, we
@@ -92,7 +92,8 @@ not produce any ads in 2017 which was the height of the #ME TOO movement
 in the US. Contextualizing our data, gave us more of an informed
 understanding of the production of the different ad categories.
 
-\[Suggestions - Patrick\]
+We had a few suggestions on how we could improve our research to better answer our question of what influences ad popularity at Super Bowls. For one, we continuously recognized throughout our project that certain factors of ads were likely the cause of their high popularity counts that were unseen in our data. For instance, some commercials were very sentimental either through story telling or background music, which we hypothesized led to more activity on youtube. Additionally, the Boolean TRUE FALSE metric didn’t allow for a continuum within ad categories. For example, ads that would be really funny to a general audience and ads that tried to be funny but weren't great at achieving this goal, were marked TRUE in the same category. A second example would be ads that included an old senator who was relevant long before youtube gained popularity was evaluated as being a celebrity just as much as the most well-known comedic entertainers of the current times. 
+Finally, our last issue we felt was with the overall gathering of data for this project. We thought that something akin to a random survey would be a better evaluation of whether or not people enjoyed the commercials. This is due to the fact that using likes on youtube will be inherently biased towards the demographics that are most likely to browse youtube, which may be different than the demographic of Super Bowl viewers. Most people watching the Super Bowl are not likely to go on to youtube, sign in or create an account and then like or dislike a commercial after just watching it live.
 
 ## Presentation
 
